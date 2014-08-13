@@ -19,9 +19,10 @@ public class ck_raster extends PApplet {
 
 //gui setup
 float bg_color = 255;
+float ws_bg_color = 200;
 
-float ws_width = 123;
-float ws_height = 321;
+float ws_width = 300;
+float ws_height = 500;
 
 float zoom;
 PVector offset;
@@ -30,7 +31,7 @@ PVector mouse;
 boolean drag = false;
 
 public void setup() {
-	frameRate(25);
+	frameRate(30);
 	size(displayWidth, displayHeight);
 
 	// zoom end position offset   
@@ -52,6 +53,8 @@ public void draw() {
 	
 	popMatrix();
 
+	temp_info();
+
 
 //	temp
 	
@@ -59,9 +62,9 @@ public void draw() {
 }
 
 public void ws_display(){
-	fill(255);
+	fill(ws_bg_color);
 	rect(0,0,ws_width,ws_height);
-	line_grid(ws_width,ws_height,10);
+	line_grid(ws_width,ws_height,100);
 }
 
 public void keyPressed(){
@@ -138,6 +141,8 @@ public void line_grid(){
 	float sep = 100;
 
 	fill(0);
+	strokeWeight(1);
+	stroke(0);
 	// kreski pionowe
 	for(int i = 0; i < width/step; i++){
 		x = i * step;
@@ -157,29 +162,42 @@ public void line_grid(){
 	text(mouseX + ": x cor", mouseX + 20, mouseY);
 	text(mouseY + ": y cor", mouseX + 20, mouseY + 15);
 
-	// fps
-	noStroke();
-	rect(width-150, height-150, 150, 50);
-	fill(255);
-	text(frameRate,width-100, height-125);
-	stroke(150);
+
 
 }
 
 public void line_grid(float w_x, float w_y, int sep)	{
+	noFill();
+	strokeWeight(1);
+	stroke(0);
 	float x = 0;
 	float y = 0;
-
-	for(int i = 0; i < (w_x/sep); i++ ){
+	fill(0);
+	for(int i = 1; i < (w_x/sep); i++ ){
 		x = i * sep;
 		line(x,0,x,w_y);
+		text(PApplet.parseInt(x),x,10);
 	}
 
-	for(int i = 0; i < (w_y/sep); i++ ){
+	for(int i = 1; i < (w_y/sep); i++ ){
 		y = i * sep;
 		line(0,y,w_x,y);
+		text(PApplet.parseInt(y),10,y);
 	}
 
+}
+
+public void temp_info() {
+	noStroke();
+	pushMatrix();
+	translate(width-200, ((height-300)/2));
+	fill(0);
+	rect(0,0,200,300);
+	fill(255);
+	text("fps: ",10,20);
+	text(frameRate,50,20);
+
+	popMatrix();
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "ck_raster" };

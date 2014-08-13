@@ -3,9 +3,10 @@
 
 //gui setup
 float bg_color = 255;
+float ws_bg_color = 200;
 
-float ws_width = 123;
-float ws_height = 321;
+float ws_width = 300;
+float ws_height = 500;
 
 float zoom;
 PVector offset;
@@ -14,7 +15,7 @@ PVector mouse;
 boolean drag = false;
 
 void setup() {
-	frameRate(25);
+	frameRate(30);
 	size(displayWidth, displayHeight);
 
 	// zoom end position offset   
@@ -36,6 +37,8 @@ void draw() {
 	
 	popMatrix();
 
+	temp_info();
+
 
 //	temp
 	
@@ -43,9 +46,9 @@ void draw() {
 }
 
 void ws_display(){
-	fill(255);
+	fill(ws_bg_color);
 	rect(0,0,ws_width,ws_height);
-	line_grid(ws_width,ws_height,10);
+	line_grid(ws_width,ws_height,100);
 }
 
 void keyPressed(){
@@ -122,6 +125,8 @@ void line_grid(){
 	float sep = 100;
 
 	fill(0);
+	strokeWeight(1);
+	stroke(0);
 	// kreski pionowe
 	for(int i = 0; i < width/step; i++){
 		x = i * step;
@@ -141,27 +146,40 @@ void line_grid(){
 	text(mouseX + ": x cor", mouseX + 20, mouseY);
 	text(mouseY + ": y cor", mouseX + 20, mouseY + 15);
 
-	// fps
-	noStroke();
-	rect(width-150, height-150, 150, 50);
-	fill(255);
-	text(frameRate,width-100, height-125);
-	stroke(150);
+
 
 }
 
 void line_grid(float w_x, float w_y, int sep)	{
+	noFill();
+	strokeWeight(1);
+	stroke(0);
 	float x = 0;
 	float y = 0;
-
-	for(int i = 0; i < (w_x/sep); i++ ){
+	fill(0);
+	for(int i = 1; i < (w_x/sep); i++ ){
 		x = i * sep;
 		line(x,0,x,w_y);
+		text(int(x),x,10);
 	}
 
-	for(int i = 0; i < (w_y/sep); i++ ){
+	for(int i = 1; i < (w_y/sep); i++ ){
 		y = i * sep;
 		line(0,y,w_x,y);
+		text(int(y),10,y);
 	}
 
+}
+
+void temp_info() {
+	noStroke();
+	pushMatrix();
+	translate(width-200, ((height-300)/2));
+	fill(0);
+	rect(0,0,200,300);
+	fill(255);
+	text("fps: ",10,20);
+	text(frameRate,50,20);
+
+	popMatrix();
 }
