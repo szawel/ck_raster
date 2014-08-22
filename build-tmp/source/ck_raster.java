@@ -3,6 +3,7 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import org.philhosoft.p8g.svg.P8gGraphicsSVG; 
 import controlP5.*; 
 
 import java.util.HashMap; 
@@ -20,14 +21,18 @@ public class ck_raster extends PApplet {
 // generator rastra //
 
 
+
+
+P8gGraphicsSVG svg;
 ControlP5 cp5;
+
 
 //gui setup
 float bg_color = 255;
 float ws_bg_color = 200;
 
 // --------------------------------------------- [ przestrzen robocza ]
-float ws_width = 300;
+float ws_width = 500;
 float ws_height = 200;
 
 // --------------------------------------------- [ lina ]
@@ -41,6 +46,11 @@ float l_weight = 1;
 int sin_freq = 2;
 float sin_amp = 100;
 float sin_bend = 1;
+
+// boolean record_pdf = false;
+boolean record_svg = false;
+boolean selectPathToExportSVG = false;
+String exportPath = "";
 
 float zoom;
 PVector offset;
@@ -81,14 +91,14 @@ public void setup() {
 		.setCaptionLabel("szeroko\u015b\u0107")
 		.setPosition(ws_menu_x,ws_menu_y+ws_menu_s)
 		.setSize(ws_menu_w,ws_menu_h)
-		.setRange(300,1000)
+		.setRange(100,1000)
     ;
 
 	cp5.addSlider("ws_height")
 		.setCaptionLabel("wysoko\u015b\u0107")
 		.setPosition(ws_menu_x,ws_menu_y+(ws_menu_s*2))
 		.setSize(ws_menu_w,ws_menu_h)
-		.setRange(300,1000)
+		.setRange(100,1000)
     ;
 
 	float linia_menu_x = 50;
@@ -170,6 +180,12 @@ public void setup() {
 		.setSize(sin_menu_w,sin_menu_h)
 		.setRange(0,1)
     ;
+
+	cp5.addButton("export_svg")
+	   .setLabel("export svg")
+	   .setPosition( 50, 500 )
+	   .setSize(350, 20)
+	   .setColorLabel(0xffffffff);
 	// zoom end position offset   
 
   zoom = 1.0f;
@@ -184,18 +200,37 @@ public void draw() {
 	pushMatrix();
 	scale(zoom);
 	translate(offset.x/zoom, offset.y/zoom);
-	
 	ws_display();
+	popMatrix();
+
+	if (selectPathToExportSVG == true) {
+    println("selectPathToExportSVG = " + selectPathToExportSVG);
+    record_svg = true;
+    zoom = 1.0f;
+    offset.x = 0.0f - (0);
+    offset.y = 0.0f - (0);
+    record_svg = true;
+  }
+
+	if (record_svg) {
+    svg = (P8gGraphicsSVG) createGraphics(PApplet.parseInt(ws_width), PApplet.parseInt(ws_height), P8gGraphicsSVG.SVG,exportPath + ".svg");
+		beginRecord(svg);
+	}
+	pushMatrix();
+	scale(zoom);
+	translate(offset.x/zoom, offset.y/zoom);
 	
-	// float dupa = ws_height / l_int_lin;
 	for(int i = 0 ; i < ( ws_height / l_int_lin ); i++){
 		qcur(points(i*l_int_lin));
 	}
-
-
-
-
 	popMatrix();
+
+  if(record_svg == true) {
+    endRecord();    
+    record_svg = false;
+  }
+
+
 
 	temp_info();
 	noFill();
@@ -278,6 +313,24 @@ public void mouseWheel(MouseEvent event) {
   }
   if (zoom <= 0.1f) {
     zoom = 0.1f;
+  }
+}
+
+public void export_svg() {
+  selectOutput("wybie\u017c lokalizacje:", "exportFileSVG");
+  // println();
+  selectPathToExportSVG = true;
+}
+
+public void exportFileSVG(File selection) {
+  if (selection == null) {
+    println("Window was closed or the user hit cancel.");
+  }
+
+  else {
+      exportPath = selection.getAbsolutePath();
+      selectPathToExportSVG = true;
+    println("plik zapisany : " + exportPath + ".svg");
   }
 }
 
