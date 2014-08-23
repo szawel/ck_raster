@@ -202,17 +202,21 @@ public void setup() {
  
 public void draw() {
 
+	// 
 	float n_l_int_val = ( l_len * l_int_val );
 
 
 
 	background(bg_color);
+
+	// linie i coordynaty dla background
 	line_grid();
+
 
 	pushMatrix();
 	scale(zoom);
 	translate(offset.x/zoom, offset.y/zoom);
-	ws_display();
+	// ws_display();
 	popMatrix();
 
 	if (selectPathToExportSVG == true) {
