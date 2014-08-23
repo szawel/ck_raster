@@ -5,6 +5,7 @@ import processing.opengl.*;
 
 import org.philhosoft.p8g.svg.P8gGraphicsSVG; 
 import controlP5.*; 
+import java.awt.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 
@@ -23,8 +24,14 @@ public class ck_raster extends PApplet {
 
 
 
+
+
 P8gGraphicsSVG svg;
 ControlP5 cp5;
+
+Graphics2D  screen;
+Graphics2D  paper;
+BasicStroke pen;
 
 
 //gui setup
@@ -117,14 +124,14 @@ public void setup() {
 		.setCaptionLabel("d\u0142ugo\u015b\u0107")
 		.setPosition(linia_menu_x,linia_menu_y+linia_menu_s)
 		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(100,1000)
+		.setRange(1,100)
     ;
 
 	cp5.addSlider("l_int_val")
 		.setCaptionLabel("odt\u0119p")
 		.setPosition(linia_menu_x,linia_menu_y+(linia_menu_s*2))
 		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(100,1000)
+		.setRange(0,1)
     ;
 
 	cp5.addSlider("l_int_lin")
@@ -145,7 +152,7 @@ public void setup() {
 		.setCaptionLabel("grubo\u015b\u0107")
 		.setPosition(linia_menu_x,linia_menu_y+(linia_menu_s*5))
 		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(100,1000)
+		.setRange(0.1f,5)
     ;
 
 	float sin_menu_x = 50;
@@ -194,6 +201,11 @@ public void setup() {
 }
  
 public void draw() {
+
+	float n_l_int_val = ( l_len * l_int_val );
+
+
+
 	background(bg_color);
 	line_grid();
 
@@ -215,10 +227,19 @@ public void draw() {
 	if (record_svg) {
     svg = (P8gGraphicsSVG) createGraphics(PApplet.parseInt(ws_width), PApplet.parseInt(ws_height), P8gGraphicsSVG.SVG,exportPath + ".svg");
 		beginRecord(svg);
+		screen = ((PGraphicsJava2D) g).g2;
+    paper = svg.g2;
+    paper.setStroke(pen);
 	}
 	pushMatrix();
 	scale(zoom);
 	translate(offset.x/zoom, offset.y/zoom);
+
+	float[] _dash = {l_len,n_l_int_val};
+
+	pen = new BasicStroke(l_weight, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4.0f, _dash, 0);
+  Graphics2D g2 = ((PGraphicsJava2D) g).g2;
+  g2.setStroke(pen);
 	
 	for(int i = 0 ; i < ( ws_height / l_int_lin ); i++){
 		qcur(points(i*l_int_lin));
@@ -228,6 +249,7 @@ public void draw() {
   if(record_svg == true) {
     endRecord();    
     record_svg = false;
+    selectPathToExportSVG = false;
   }
 
 
@@ -464,7 +486,7 @@ public void qcur(float[][] _pos){
 	// text(_pos.length,50,50);
 	noFill();
 	stroke(0);
-	strokeWeight(1);
+	// strokeWeight(1);
 
 	beginShape();
 	for(int i = 0; i < _pos.length-6; i+=6){

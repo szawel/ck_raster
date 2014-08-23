@@ -44,7 +44,7 @@ void qcur(float[][] _pos){
 	// text(_pos.length,50,50);
 	noFill();
 	stroke(0);
-	strokeWeight(1);
+	// strokeWeight(1);
 
 	beginShape();
 	for(int i = 0; i < _pos.length-6; i+=6){
