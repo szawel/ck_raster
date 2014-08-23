@@ -32,6 +32,7 @@ ControlP5 cp5;
 Graphics2D  screen;
 Graphics2D  paper;
 BasicStroke pen;
+PShape logo;
 
 
 //gui setup
@@ -43,15 +44,15 @@ float ws_width;
 float ws_height;
 
 // --------------------------------------------- [ lina ]
-float l_len = 30;
-float l_int_val = 0.1f;
-float l_int_lin = 13;
-float l_ofset = 0;
+float l_len = 31;
+float l_int_val = 0.28f;
+float l_int_lin = 12;
+float l_ofset = 0.12f;
 float l_weight = 1;
 
 // --------------------------------------------- [ sin ]
-float sin_amp = 30;
-int sin_freq = 1;
+float sin_amp = 20.85f;
+int sin_freq = 2;
 float sin_bend = 0.5f;
 
 // boolean record_pdf = false;
@@ -72,6 +73,8 @@ public void setup() {
 
   frameRate(30);
   size(displayWidth, displayHeight);
+
+  logo = loadShape("logo.svg");
 
 
   smooth();
@@ -96,7 +99,7 @@ public void setup() {
   cp5.addTextlabel("workspace")
     .setText("PRZESTRZE\u0143 ROBOCZA")
       .setPosition(ws_menu_x, ws_menu_y)
-        // .setFont(loadFont("PTSansPro-Regular-12.vlw"))
+        .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
 
   cp5.addSlider("ws_width")
@@ -114,7 +117,7 @@ public void setup() {
             ;
 
   float linia_menu_x = 50;
-  float linia_menu_y = 200;
+  float linia_menu_y = 170;
   float linia_menu_s = 20;
   int linia_menu_w = 350;
   int linia_menu_h = 15;
@@ -122,14 +125,14 @@ public void setup() {
   cp5.addTextlabel("linia")
     .setText("PARAMETRY LINI")
       .setPosition(linia_menu_x, linia_menu_y)
-        // .setFont(loadFont("PTSansPro-Regular-12.vlw"))
+        .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
 
   cp5.addSlider("l_len")
     .setCaptionLabel("d\u0142ugo\u015b\u0107")
       .setPosition(linia_menu_x, linia_menu_y+linia_menu_s)
         .setSize(linia_menu_w, linia_menu_h)
-          .setRange(1, 100)
+          .setRange(7, 100)
             ;
 
   cp5.addSlider("l_int_val")
@@ -157,33 +160,33 @@ public void setup() {
     .setCaptionLabel("grubo\u015b\u0107")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*5))
         .setSize(linia_menu_w, linia_menu_h)
-          .setRange(0.1f, 5)
+          .setRange(0.5f, 10)
             ;
 
   float sin_menu_x = 50;
-  float sin_menu_y = 350;
+  float sin_menu_y = 300;
   float sin_menu_s = 20;
   int sin_menu_w = 350;
   int sin_menu_h = 15;
 
   cp5.addTextlabel("sin")
-    .setText("sinus")
+    .setText("WYGI\u0118CIE")
       .setPosition(sin_menu_x, sin_menu_y)
-        // .setFont(loadFont("PTSansPro-Regular-12.vlw"))
+        .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
 
   cp5.addSlider("sin_amp")
     .setCaptionLabel("amplituda")
       .setPosition(sin_menu_x, sin_menu_y+sin_menu_s)
         .setSize(sin_menu_w, sin_menu_h)
-          .setRange(-100, 100)
+          .setRange(0, 100)
             ;
 
   cp5.addSlider("sin_freq")
     .setCaptionLabel("czestotliwo\u015b\u0107")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*2))
         .setSize(sin_menu_w, sin_menu_h)
-          .setRange(1, 10)
+          .setRange(1, 20)
             ;
 
   cp5.addSlider("sin_bend")
@@ -199,8 +202,8 @@ public void setup() {
         .setSize(350, 20)
           .setColorLabel(0xffffffff);
 
-  ws_width = 500;
-  ws_height = 500;
+  ws_width = 600;
+  ws_height = 200;
   // zoom end position offset   
 
 
@@ -217,7 +220,7 @@ public void draw() {
 
   background(bg_color);
 
-  rect(50, 50, 350, 30);
+  // rect(50, 50, 350, 30);
 
   // linie i coordynaty dla background
   // line_grid();
@@ -269,24 +272,18 @@ public void draw() {
     selectPathToExportSVG = false;
   }
 
+  noStroke();
+  fill(255,255,255,200);
+  rect(50,50,450,450);
+  rect(50, 50, 350, 30);
+  shape(logo, 50, 50);
+  // shape(logo, 50, 50, 350, 30);
 
-
-  // temp_info();
-  // noFill();
-  // strokeWeight(1);
-  // stroke(255, 0, 0);
-  // ellipse(offset.x, offset.y, 15, 15);
-  // ellipse(poffset.x, poffset.y, 15, 15);
-  // line(offset.x, offset.y, poffset.x, poffset.y);
-  // fill(255, 0, 0);
-  // text("offset", offset.x, offset.y-20);
-  // text("poffset", poffset.x, poffset.y-20);
-
-
-  // //	temp
 }
 
 public void ws_display() {
+  stroke(0);
+  strokeWeight(0.5f);
   fill(255);
   rect(0, 0, ws_width, ws_height);
   // line_grid(ws_width, ws_height, 50);
@@ -446,7 +443,6 @@ public void temp_info() {
 
   popMatrix();
 }
-
 // funkcja usrala koordynaty puknkt\u00f3w potrzebne 
 public float[][] points(float _y,boolean seg_nr){
 	float x , y;
@@ -560,7 +556,7 @@ public float[][] sub_seg(float[][] _in, float ppos){
 	out[0][3] =	_in[0][3]; 
 	out[1][3] =	_in[1][3];
 
-	println("out" + out[0][1]);
+	// println("out" + out[0][1]);
 	
 	return out;
 

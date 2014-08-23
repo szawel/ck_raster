@@ -111,7 +111,7 @@ float[][] sub_seg(float[][] _in, float ppos){
 	out[0][3] =	_in[0][3]; 
 	out[1][3] =	_in[1][3];
 
-	println("out" + out[0][1]);
+	// println("out" + out[0][1]);
 	
 	return out;
 
