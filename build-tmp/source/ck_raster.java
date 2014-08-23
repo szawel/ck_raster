@@ -39,20 +39,20 @@ float bg_color = 255;
 float ws_bg_color = 200;
 
 // --------------------------------------------- [ przestrzen robocza ]
-float ws_width = 500;
-float ws_height = 200;
+float ws_width;
+float ws_height;
 
 // --------------------------------------------- [ lina ]
-float l_len = 1;
-float l_int_val = 1;
-float l_int_lin = 10;
-float l_ofset = 1;
+float l_len = 30;
+float l_int_val = 0.1f;
+float l_int_lin = 13;
+float l_ofset = 0;
 float l_weight = 1;
 
 // --------------------------------------------- [ sin ]
-int sin_freq = 2;
-float sin_amp = 100;
-float sin_bend = 1;
+float sin_amp = 30;
+int sin_freq = 1;
+float sin_bend = 0.5f;
 
 // boolean record_pdf = false;
 boolean record_svg = false;
@@ -65,16 +65,21 @@ PVector poffset;
 PVector mouse;
 boolean drag = false;
 
-public void setup() {
-	frameRate(30);
-	size(displayWidth, displayHeight);
+//temp
+int seg_nr = 0;
 
-	smooth();
+public void setup() {
+
+  frameRate(30);
+  size(displayWidth, displayHeight);
+
+
+  smooth();
   noStroke();  
   cp5 = new ControlP5(this);
-	PFont p = loadFont("PTSansPro-Regular-9.vlw");
+  PFont p = loadFont("PTSansPro-Regular-9.vlw");
 
-	cp5.setControlFont(p);
+  cp5.setControlFont(p);
   cp5.setColorLabel(0xff000000);
   cp5.setColorForeground(0xff000000);
   cp5.setColorBackground(0xffB4B4B4);
@@ -82,144 +87,149 @@ public void setup() {
 
   // --------------------------------------------- [ przestrzen robocza ]
 
-	float ws_menu_x = 50;
-	float ws_menu_y = 100;
-	float ws_menu_s = 20;
-	int ws_menu_w = 350;
-	int ws_menu_h = 15;
+  float ws_menu_x = 50;
+  float ws_menu_y = 100;
+  float ws_menu_s = 20;
+  int ws_menu_w = 350;
+  int ws_menu_h = 15;
 
-	cp5.addTextlabel("workspace")
-		.setText("PRZESTRZE\u0143 ROBOCZA")
-		.setPosition(ws_menu_x,ws_menu_y)
-		// .setFont(loadFont("PTSansPro-Regular-12.vlw"))
-		.setColorValue(0xff000000);
+  cp5.addTextlabel("workspace")
+    .setText("PRZESTRZE\u0143 ROBOCZA")
+      .setPosition(ws_menu_x, ws_menu_y)
+        // .setFont(loadFont("PTSansPro-Regular-12.vlw"))
+        .setColorValue(0xff000000);
 
-	cp5.addSlider("ws_width")
-		.setCaptionLabel("szeroko\u015b\u0107")
-		.setPosition(ws_menu_x,ws_menu_y+ws_menu_s)
-		.setSize(ws_menu_w,ws_menu_h)
-		.setRange(100,1000)
-    ;
+  cp5.addSlider("ws_width")
+    .setCaptionLabel("szeroko\u015b\u0107")
+      .setPosition(ws_menu_x, ws_menu_y+ws_menu_s)
+        .setSize(ws_menu_w, ws_menu_h)
+          .setRange(100, 1000)
+            ;
 
-	cp5.addSlider("ws_height")
-		.setCaptionLabel("wysoko\u015b\u0107")
-		.setPosition(ws_menu_x,ws_menu_y+(ws_menu_s*2))
-		.setSize(ws_menu_w,ws_menu_h)
-		.setRange(100,1000)
-    ;
+  cp5.addSlider("ws_height")
+    .setCaptionLabel("wysoko\u015b\u0107")
+      .setPosition(ws_menu_x, ws_menu_y+(ws_menu_s*2))
+        .setSize(ws_menu_w, ws_menu_h)
+          .setRange(100, 1000)
+            ;
 
-	float linia_menu_x = 50;
-	float linia_menu_y = 200;
-	float linia_menu_s = 20;
-	int linia_menu_w = 350;
-	int linia_menu_h = 15;
+  float linia_menu_x = 50;
+  float linia_menu_y = 200;
+  float linia_menu_s = 20;
+  int linia_menu_w = 350;
+  int linia_menu_h = 15;
 
-	cp5.addTextlabel("linia")
-		.setText("PARAMETRY LINI")
-		.setPosition(linia_menu_x,linia_menu_y)
-		// .setFont(loadFont("PTSansPro-Regular-12.vlw"))
-		.setColorValue(0xff000000);
+  cp5.addTextlabel("linia")
+    .setText("PARAMETRY LINI")
+      .setPosition(linia_menu_x, linia_menu_y)
+        // .setFont(loadFont("PTSansPro-Regular-12.vlw"))
+        .setColorValue(0xff000000);
 
-	cp5.addSlider("l_len")
-		.setCaptionLabel("d\u0142ugo\u015b\u0107")
-		.setPosition(linia_menu_x,linia_menu_y+linia_menu_s)
-		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(1,100)
-    ;
+  cp5.addSlider("l_len")
+    .setCaptionLabel("d\u0142ugo\u015b\u0107")
+      .setPosition(linia_menu_x, linia_menu_y+linia_menu_s)
+        .setSize(linia_menu_w, linia_menu_h)
+          .setRange(1, 100)
+            ;
 
-	cp5.addSlider("l_int_val")
-		.setCaptionLabel("odt\u0119p")
-		.setPosition(linia_menu_x,linia_menu_y+(linia_menu_s*2))
-		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(0,1)
-    ;
+  cp5.addSlider("l_int_val")
+    .setCaptionLabel("odt\u0119p")
+      .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*2))
+        .setSize(linia_menu_w, linia_menu_h)
+          .setRange(0, 1)
+            ;
 
-	cp5.addSlider("l_int_lin")
-		.setCaptionLabel("interlinia")
-		.setPosition(linia_menu_x,linia_menu_y+(linia_menu_s*3))
-		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(5,50)
-    ;
-	
-	cp5.addSlider("l_ofset")
-		.setCaptionLabel("ofset")
-		.setPosition(linia_menu_x,linia_menu_y+(linia_menu_s*4))
-		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(100,1000)
-    ;
+  cp5.addSlider("l_int_lin")
+    .setCaptionLabel("interlinia")
+      .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*3))
+        .setSize(linia_menu_w, linia_menu_h)
+          .setRange(5, 50)
+            ;
 
-	cp5.addSlider("l_weight")
-		.setCaptionLabel("grubo\u015b\u0107")
-		.setPosition(linia_menu_x,linia_menu_y+(linia_menu_s*5))
-		.setSize(linia_menu_w,linia_menu_h)
-		.setRange(0.1f,5)
-    ;
+  cp5.addSlider("l_ofset")
+    .setCaptionLabel("ofset")
+      .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*4))
+        .setSize(linia_menu_w, linia_menu_h)
+          .setRange(0, 1)
+            ;
 
-	float sin_menu_x = 50;
-	float sin_menu_y = 400;
-	float sin_menu_s = 20;
-	int sin_menu_w = 350;
-	int sin_menu_h = 15;
+  cp5.addSlider("l_weight")
+    .setCaptionLabel("grubo\u015b\u0107")
+      .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*5))
+        .setSize(linia_menu_w, linia_menu_h)
+          .setRange(0.1f, 5)
+            ;
 
-	cp5.addTextlabel("sin")
-		.setText("sinus")
-		.setPosition(sin_menu_x,sin_menu_y)
-		// .setFont(loadFont("PTSansPro-Regular-12.vlw"))
-		.setColorValue(0xff000000);
+  float sin_menu_x = 50;
+  float sin_menu_y = 350;
+  float sin_menu_s = 20;
+  int sin_menu_w = 350;
+  int sin_menu_h = 15;
 
-	cp5.addSlider("sin_amp")
-		.setCaptionLabel("amplituda")
-		.setPosition(sin_menu_x,sin_menu_y+sin_menu_s)
-		.setSize(sin_menu_w,sin_menu_h)
-		.setRange(-100,100)
-    ;
+  cp5.addTextlabel("sin")
+    .setText("sinus")
+      .setPosition(sin_menu_x, sin_menu_y)
+        // .setFont(loadFont("PTSansPro-Regular-12.vlw"))
+        .setColorValue(0xff000000);
 
-	cp5.addSlider("sin_freq")
-		.setCaptionLabel("czestotliwo\u015b\u0107")
-		.setPosition(sin_menu_x,sin_menu_y+(sin_menu_s*2))
-		.setSize(sin_menu_w,sin_menu_h)
-		.setRange(1,10)
-    ;
+  cp5.addSlider("sin_amp")
+    .setCaptionLabel("amplituda")
+      .setPosition(sin_menu_x, sin_menu_y+sin_menu_s)
+        .setSize(sin_menu_w, sin_menu_h)
+          .setRange(-100, 100)
+            ;
 
-	cp5.addSlider("sin_bend")
-		.setCaptionLabel("wygiecie")
-		.setPosition(sin_menu_x,sin_menu_y+(sin_menu_s*3))
-		.setSize(sin_menu_w,sin_menu_h)
-		.setRange(0,1)
-    ;
+  cp5.addSlider("sin_freq")
+    .setCaptionLabel("czestotliwo\u015b\u0107")
+      .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*2))
+        .setSize(sin_menu_w, sin_menu_h)
+          .setRange(1, 10)
+            ;
 
-	cp5.addButton("export_svg")
-	   .setLabel("export svg")
-	   .setPosition( 50, 500 )
-	   .setSize(350, 20)
-	   .setColorLabel(0xffffffff);
-	// zoom end position offset   
+  cp5.addSlider("sin_bend")
+    .setCaptionLabel("wygiecie")
+      .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*3))
+        .setSize(sin_menu_w, sin_menu_h)
+          .setRange(0, 1)
+            ;
+
+  cp5.addButton("export_svg")
+    .setLabel("export svg")
+      .setPosition( sin_menu_x, sin_menu_y+(sin_menu_s*5) )
+        .setSize(350, 20)
+          .setColorLabel(0xffffffff);
+
+  ws_width = 500;
+  ws_height = 500;
+  // zoom end position offset   
+
 
   zoom = 1.0f;
   offset = new PVector((displayWidth)/2, (displayHeight)/2);
   poffset = new PVector(0, 0);
 }
- 
+
 public void draw() {
 
-	// 
-	float n_l_int_val = ( l_len * l_int_val );
+  // 
+  float n_l_int_val = ( l_len * l_int_val );
 
 
+  background(bg_color);
 
-	background(bg_color);
+  rect(50, 50, 350, 30);
 
-	// linie i coordynaty dla background
-	line_grid();
+  // linie i coordynaty dla background
+  // line_grid();
 
 
-	pushMatrix();
-	scale(zoom);
-	translate(offset.x/zoom, offset.y/zoom);
-	// ws_display();
-	popMatrix();
+  pushMatrix();
+  scale(zoom);
+  translate(offset.x/zoom, offset.y/zoom);
+  ws_display();
+  popMatrix();
 
-	if (selectPathToExportSVG == true) {
+  if (selectPathToExportSVG == true) {
     println("selectPathToExportSVG = " + selectPathToExportSVG);
     record_svg = true;
     zoom = 1.0f;
@@ -228,29 +238,32 @@ public void draw() {
     record_svg = true;
   }
 
-	if (record_svg) {
-    svg = (P8gGraphicsSVG) createGraphics(PApplet.parseInt(ws_width), PApplet.parseInt(ws_height), P8gGraphicsSVG.SVG,exportPath + ".svg");
-		beginRecord(svg);
-		screen = ((PGraphicsJava2D) g).g2;
+  if (record_svg) {
+    svg = (P8gGraphicsSVG) createGraphics(PApplet.parseInt(ws_width), PApplet.parseInt(ws_height), P8gGraphicsSVG.SVG, exportPath + ".svg");
+    beginRecord(svg);
+    screen = ((PGraphicsJava2D) g).g2;
     paper = svg.g2;
     paper.setStroke(pen);
-	}
-	pushMatrix();
-	scale(zoom);
-	translate(offset.x/zoom, offset.y/zoom);
+  }
+  pushMatrix();
+  scale(zoom);
+  translate(offset.x/zoom, offset.y/zoom);
 
-	float[] _dash = {l_len,n_l_int_val};
+  float[] _dash = {
+    l_len, n_l_int_val
+  };
 
-	pen = new BasicStroke(l_weight, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4.0f, _dash, 0);
+  pen = new BasicStroke(l_weight, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4.0f, _dash, 0);
   Graphics2D g2 = ((PGraphicsJava2D) g).g2;
   g2.setStroke(pen);
-	
-	for(int i = 0 ; i < ( ws_height / l_int_lin ); i++){
-		qcur(points(i*l_int_lin));
-	}
-	popMatrix();
 
-  if(record_svg == true) {
+  for (int i = 0; i < ( ws_height / l_int_lin ); i++) {
+    qcur(points( i * l_int_lin , false));
+    qcur(points( i * l_int_lin + ( l_int_lin/2 ), true));
+  }
+  popMatrix();
+
+  if (record_svg == true) {
     endRecord();    
     record_svg = false;
     selectPathToExportSVG = false;
@@ -258,53 +271,49 @@ public void draw() {
 
 
 
-	temp_info();
-	noFill();
-	strokeWeight(1);
-	stroke(255,0,0);
-	ellipse(offset.x, offset.y, 15, 15);
-	ellipse(poffset.x, poffset.y, 15, 15);
-	line(offset.x, offset.y,poffset.x, poffset.y);
-	fill(255,0,0);
-	text("offset",offset.x, offset.y-20);
-	text("poffset",poffset.x, poffset.y-20);
+  // temp_info();
+  // noFill();
+  // strokeWeight(1);
+  // stroke(255, 0, 0);
+  // ellipse(offset.x, offset.y, 15, 15);
+  // ellipse(poffset.x, poffset.y, 15, 15);
+  // line(offset.x, offset.y, poffset.x, poffset.y);
+  // fill(255, 0, 0);
+  // text("offset", offset.x, offset.y-20);
+  // text("poffset", poffset.x, poffset.y-20);
 
 
-//	temp
-	
-
+  // //	temp
 }
 
-public void ws_display(){
-	fill(ws_bg_color);
-	rect(0,0,ws_width,ws_height);
-	line_grid(ws_width,ws_height,50);
+public void ws_display() {
+  fill(255);
+  rect(0, 0, ws_width, ws_height);
+  // line_grid(ws_width, ws_height, 50);
 }
 
-public void keyPressed(){
+public void keyPressed() {
 
-	if ( key == 'R'){
-		zoom = 1;
-		offset.x = 0;
-		offset.y = 0;
+  if ( key == 'R') {
+    zoom = 1;
+    offset.x = 0;
+    offset.y = 0;
     // record_svg = true;
-	}
+  }
 
-	if (key == 'h' || key == 'H' || key == ' ') {
-		drag = true;
-	}
-	else {
-		drag = false;
-	}
+  if (key == 'h' || key == 'H' || key == ' ') {
+    drag = true;
+  } else {
+    drag = false;
+  }
 
-	if (key == '=') {
-		zoom += 0.1f;
-	// println("[   zoom   ]"+" + 0.1 ");
-	} 
-	else if (key == '-') {
-		zoom -= 0.1f;
-	// println("[   zoom   ]"+" - 0.1 ");
-	}
+  if (key == '=') {
+    zoom += 0.1f;
+    // println("[   zoom   ]"+" + 0.1 ");
+  } else if (key == '-') {
+    zoom -= 0.1f;
+    // println("[   zoom   ]"+" - 0.1 ");
+  }
 } 
 
 public void keyReleased() {
@@ -351,107 +360,103 @@ public void export_svg() {
 public void exportFileSVG(File selection) {
   if (selection == null) {
     println("Window was closed or the user hit cancel.");
-  }
-
-  else {
-      exportPath = selection.getAbsolutePath();
-      selectPathToExportSVG = true;
+  } else {
+    exportPath = selection.getAbsolutePath();
+    selectPathToExportSVG = true;
     println("plik zapisany : " + exportPath + ".svg");
   }
 }
 
 
 // ------------------------------------------------------------ temp 
-public void line_grid(){
-	float x = 0;
-	float y = 0;
-	float step = 100;
-	float sep = 100;
+public void line_grid() {
+  float x = 0;
+  float y = 0;
+  float step = 50;
+  float sep = 50;
 
-	fill(0);
-	strokeWeight(0.1f);
-	stroke(0);
-	// kreski pionowe
-	for(int i = 0; i < width/step; i++){
-		x = i * step;
-		line(x,0,x,height);
-		text(PApplet.parseInt(x),x,10);
-	}
-	// kreski poziome
+  fill(0);
+  strokeWeight(0.1f);
+  stroke(0);
+  // kreski pionowe
+  for (int i = 0; i < width/step; i++) {
+    x = i * step;
+    line(x, 0, x, height);
+    text(PApplet.parseInt(x), x, 10);
+  }
+  // kreski poziome
 
-	for(int i = 0; i < height/step; i++){
-		y = i * step;
-		line(0,y,width,y);
-		text(PApplet.parseInt(y),10,y);
-	}
+  for (int i = 0; i < height/step; i++) {
+    y = i * step;
+    line(0, y, width, y);
+    text(PApplet.parseInt(y), 10, y);
+  }
 
-	// kursor myszy z koordynatami
-	stroke(255);
-	text(mouseX + ": x cor", mouseX + 20, mouseY);
-	text(mouseY + ": y cor", mouseX + 20, mouseY + 15);
-
-
-
+  // kursor myszy z koordynatami
+  stroke(255);
+  text(mouseX + ": x cor", mouseX + 20, mouseY);
+  text(mouseY + ": y cor", mouseX + 20, mouseY + 15);
 }
 
-public void line_grid(float w_x, float w_y, int sep)	{
-	noFill();
-	strokeWeight(0.1f);
-	stroke(0);
-	float x = 0;
-	float y = 0;
-	fill(0);
-	for(int i = 1; i < (w_x/sep); i++ ){
-		x = i * sep;
-		line(x,0,x,w_y);
-		text(PApplet.parseInt(x),x,10);
-	}
+public void line_grid(float w_x, float w_y, int sep) {
+  noFill();
+  strokeWeight(0.1f);
+  stroke(0);
+  float x = 0;
+  float y = 0;
+  fill(0);
+  for (int i = 1; i < (w_x/sep); i++ ) {
+    x = i * sep;
+    line(x, 0, x, w_y);
+    text(PApplet.parseInt(x), x, 10);
+  }
 
-	for(int i = 1; i < (w_y/sep); i++ ){
-		y = i * sep;
-		line(0,y,w_x,y);
-		text(PApplet.parseInt(y),10,y);
-	}
-
+  for (int i = 1; i < (w_y/sep); i++ ) {
+    y = i * sep;
+    line(0, y, w_x, y);
+    text(PApplet.parseInt(y), 10, y);
+  }
 }
 
 public void temp_info() {
-	noStroke();
-	pushMatrix();
-	translate(width-200, ((height-300)/2));
-	fill(0);
-	rect(0,0,200,300);
-	fill(255);
+  noStroke();
+  pushMatrix();
+  translate(width-200, ((height-300)/2));
+  fill(0);
+  rect(0, 0, 200, 300);
+  fill(255);
 
-	text("fps: ",10,20);
-	text(frameRate,70,20);
+  text("fps: ", 10, 20);
+  text(frameRate, 70, 20);
 
-	text("zoom: ",10,40);
-	text(zoom,70,40);
+  text("zoom: ", 10, 40);
+  text(zoom, 70, 40);
 
-	text("offset.x: ",10,60);
-	text(offset.x,70,60);
+  text("offset.x: ", 10, 60);
+  text(offset.x, 70, 60);
 
-	text("offset.y: ",10,80);
-	text(offset.y,70,80);
+  text("offset.y: ", 10, 80);
+  text(offset.y, 70, 80);
 
-	text("poffset.x: ",10,100);
-	text(poffset.x,70,100);
+  text("poffset.x: ", 10, 100);
+  text(poffset.x, 70, 100);
 
-	text("poffset.y",10,120);
-	text(poffset.y,70,120);
+  text("poffset.y", 10, 120);
+  text(poffset.y, 70, 120);
 
-	popMatrix();
+  popMatrix();
 }
 
 // funkcja usrala koordynaty puknkt\u00f3w potrzebne 
-public float[][] points(float _y){
+public float[][] points(float _y,boolean seg_nr){
 	float x , y;
 	float nr = (sin_freq*6);
 
 	float sep = ( ws_width / (nr));
 
 	float[][]ppos = new float[PApplet.parseInt(nr+1)][PApplet.parseInt(nr+1)];
+	float[][]new_ppos = new float[PApplet.parseInt(nr+1)][PApplet.parseInt(nr+1)];
+
 
 	for(int i = 0; i < nr+1; i++){
 		x = i * sep;
@@ -477,15 +482,36 @@ public float[][] points(float _y){
 		ppos[1][i] = ppos[1][i] + ( sin_amp * -1 );
 	}
 
-	// for(int i = 0; i < ppos.length; i++){
-	// 	ellipse(ppos[0][i],ppos[1][i], 5, 5);
-	// 	text(i,ppos[0][i],ppos[1][i]);
-	// }
-	// sswraca dwuwymiarowy array
-	return ppos;
+	float[][] to_fix = new float[2][4];
+	float[][] fix = new float[2][4];
+
+	for(int i =0; i < 4; i++){
+		to_fix[0][i] = ppos[0][i];
+		to_fix[1][i] = ppos[1][i];
+	}
+
+	float[][] dupa = sub_seg(to_fix,l_ofset);
+
+
+	for(int i = 0; i < ppos.length; i++){
+		new_ppos[0][i] = ppos[0][i];
+		new_ppos[1][i] = ppos[1][i];
+	}
+
+	if(seg_nr == true){
+		for(int i = 0; i < 4; i++){
+			new_ppos[0][i] = dupa[0][i];
+			new_ppos[1][i] = dupa[1][i];
+		}
+	}
+
+
+	return new_ppos;
 }
 
 public void qcur(float[][] _pos){
+
+	int seg_nr = 0;
 
 	// text(_pos.length,50,50);
 	noFill();
@@ -497,8 +523,54 @@ public void qcur(float[][] _pos){
 		vertex(_pos[0][i],_pos[1][i]);
 		bezierVertex(_pos[0][i+1],_pos[1][i+1],_pos[0][i+2],_pos[1][i+2],_pos[0][i+3],_pos[1][i+3]);
 		bezierVertex(_pos[0][i+4],_pos[1][i+4],_pos[0][i+5],_pos[1][i+5],_pos[0][i+6],_pos[1][i+6]);
+		seg_nr = seg_nr + 1;
 	}
 	endShape();
+	// println(seg_nr);
+}
+
+public float[][] sub_seg(float[][] _in, float ppos){
+
+	stroke(0);
+	// float ppos = map(mouseX,0,width,0,1);
+	float[][] p = new float [2][6];
+	float[][] out = new float [2][4];
+	for(int i = 0; i < 3; i++){
+		p[0][i] = sub( _in[0][i], _in[0][i+1], ppos);
+		p[1][i] = sub( _in[1][i], _in[1][i+1], ppos);
+	}
+
+	for(int i = 0; i < 2; i++){
+		p[0][i+3] = sub( p[0][i], p[0][i+1], ppos);
+		p[1][i+3] = sub( p[1][i], p[1][i+1], ppos);		
+	}
+
+	p[0][5] = sub( p[0][3], p[0][4], ppos);
+	p[1][5] = sub( p[1][3], p[1][4], ppos);		
+
+	out[0][0] = p[0][5];
+	out[1][0] =	p[1][5];
+	
+	out[0][1] = p[0][4];
+	out[1][1] = p[1][4];
+	
+	out[0][2] = p[0][2];
+	out[1][2] = p[1][2];
+	
+	out[0][3] =	_in[0][3]; 
+	out[1][3] =	_in[1][3];
+
+	println("out" + out[0][1]);
+	
+	return out;
+
+}
+
+public float sub(float _in_a, float _in_b, float _pos){
+	float out =	map(_pos,0,1,_in_a,_in_b);
+
+	return out;
+
 }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "ck_raster" };
