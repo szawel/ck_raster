@@ -47,6 +47,8 @@ PVector mouse;
 boolean drag = false;
 
 //temp
+boolean info_swith = false;
+
 int seg_nr = 0;
 
 void setup() {
@@ -182,6 +184,12 @@ void setup() {
         .setSize(350, 20)
           .setColorLabel(#ffffff);
 
+  // create a toggle
+  cp5.addToggle("toggle")
+    .setLabel("INFO")
+      .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*7))
+        .setSize(50, 20);
+
   ws_width = 600;
   ws_height = 200;
   // zoom end position offset   
@@ -210,7 +218,6 @@ void draw() {
   scale(zoom);
   translate(offset.x/zoom, offset.y/zoom);
   ws_display();
-  info();
   popMatrix();
 
   if (selectPathToExportSVG == true) {
@@ -258,8 +265,13 @@ void draw() {
   fill(255,255,255,200);
   rect(0,50,500,450);
   rect(50, 50, 350, 30);
-  shape(logo, 50, 50);
   // shape(logo, 50, 50, 350, 30);
+
+  if(info_swith == true){
+    info();
+  }
+  shape(logo, 50, 50);
+  // info();
 
 }
 
@@ -345,6 +357,16 @@ void exportFileSVG(File selection) {
     println("plik zapisany : " + exportPath + ".svg");
   }
 }
+
+void toggle(boolean theFlag) {
+  if(theFlag==true) {
+    info_swith = true;
+  } else {
+    info_swith = false;
+  }
+  println(info_swith);
+}
+
 
 
 // ------------------------------------------------------------ temp 

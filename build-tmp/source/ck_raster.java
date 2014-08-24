@@ -67,6 +67,8 @@ PVector mouse;
 boolean drag = false;
 
 //temp
+boolean info_swith = false;
+
 int seg_nr = 0;
 
 public void setup() {
@@ -202,6 +204,12 @@ public void setup() {
         .setSize(350, 20)
           .setColorLabel(0xffffffff);
 
+  // create a toggle
+  cp5.addToggle("toggle")
+    .setLabel("INFO")
+      .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*7))
+        .setSize(50, 20);
+
   ws_width = 600;
   ws_height = 200;
   // zoom end position offset   
@@ -230,7 +238,6 @@ public void draw() {
   scale(zoom);
   translate(offset.x/zoom, offset.y/zoom);
   ws_display();
-  info();
   popMatrix();
 
   if (selectPathToExportSVG == true) {
@@ -278,8 +285,13 @@ public void draw() {
   fill(255,255,255,200);
   rect(0,50,500,450);
   rect(50, 50, 350, 30);
-  shape(logo, 50, 50);
   // shape(logo, 50, 50, 350, 30);
+
+  if(info_swith == true){
+    info();
+  }
+  shape(logo, 50, 50);
+  // info();
 
 }
 
@@ -366,6 +378,16 @@ public void exportFileSVG(File selection) {
   }
 }
 
+public void toggle(boolean theFlag) {
+  if(theFlag==true) {
+    info_swith = true;
+  } else {
+    info_swith = false;
+  }
+  println(info_swith);
+}
+
+
 
 // ------------------------------------------------------------ temp 
 public void line_grid() {
@@ -445,8 +467,74 @@ public void temp_info() {
 
   popMatrix();
 }
+PFont font_a, font_b;
 public void info(){
-	ellipse(50, 50, 500, 500);
+	font_a = loadFont("PTSansPro-Regular-12.vlw");
+	font_b = loadFont("PTSansPro-Italic-12.vlw");
+	fill(255);
+	strokeWeight(1);
+	stroke(0);
+	rect(0,50,900,430);
+
+	noStroke();
+
+	fill(0);
+	pushMatrix();	
+	translate(455,50);
+	// rect(0,0,50,50);
+	textFont(font_a);
+	text("   INFO ",20,60);
+	textFont(font_b);
+	text(" - obszaru roboczego i obszaru exportu ",20,80);
+	text(" - obszaru roboczego i obszaru exportu ",20,100);
+
+	text(" - pojedy\u0144czej lini ",20,150);
+	text(" - pomi\u0119dazy liniami ",20,170);
+	text(" - pomiedzy wierszami ",20,190);
+	text(" - co drugiej lini ",20,210);
+	text(" - loini ",20,230);
+
+	text(" - wygiecia ",20,280);
+	text(" - powt\u00f3rze\u0144 wygiecia ",20,300);
+	text(" - ??? ",20,320);
+
+	popMatrix();
+
+	pushMatrix();	
+	translate(700,50);
+	textFont(font_a);
+	text(" SHORTCUT ",20,60);
+	
+	text(" PRZESUWANIE",20,80);
+	textFont(font_b);
+	text(" [ space ] + [ LMB ] ",20,100);
+	text(" [ h ] + [ LMB ] ",20,120);
+
+	textFont(font_a);
+	text(" POWIEKSZENIE ",20,140);
+	textFont(font_b);
+	text(" [ Ctrl ] + [ + ] ",20,160);
+	text(" [ scrol ] ",20,180);
+
+	textFont(font_a);
+	text(" POMNIEJSZENIE ",20,200);
+	textFont(font_b);
+	text(" [ Ctrl ] + [ - ] ",20,220);
+	text(" [ scrol ] ",20,240);
+
+	textFont(font_a);
+	text(" RESET ",20,260);
+	textFont(font_b);
+	text(" [ r ] ",20,280);
+
+	textFont(font_a);
+	text(" PRESETY ",20,300);
+	textFont(font_b);
+	text(" [ Shift ] + [ 1 - 9 ] ",20,320);
+
+	text(" * [ LMB ] lewy przycisk myszy ",20,360);
+
+	popMatrix();
 }
 // funkcja usrala koordynaty puknkt\u00f3w potrzebne 
 public float[][] points(float _y,boolean seg_nr){
