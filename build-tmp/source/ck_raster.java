@@ -70,6 +70,19 @@ boolean drag = false;
 boolean info_swith = false;
 
 int seg_nr = 0;
+float cal = 0.282222f;
+
+
+// key code
+boolean fA = false;
+boolean fB = false;
+boolean s0 = false;
+boolean s1 = false;
+boolean s2 = false;
+boolean s3 = false;
+boolean s4 = false;
+boolean s5 = false;
+boolean s6 = false;
 
 public void setup() {
 
@@ -224,15 +237,49 @@ public void draw() {
 
   // 
   float n_l_int_val = ( l_len * l_int_val );
-
-
   background(bg_color);
 
-  // rect(50, 50, 350, 30);
+  if( fA == true && s0 == true){
+    ws_width = 841 / cal;
+    ws_height = 1189 / cal;
+    println("A0");
+  }
 
-  // linie i coordynaty dla background
-  // line_grid();
+  if( fA == true && s1 == true){
+    ws_width = 594 / cal;
+    ws_height = 841 / cal;
+    println("A1");
+  }
 
+  if( fA == true && s2 == true){
+    ws_width = 420 / cal;
+    ws_height = 594 / cal;
+    println("A2");
+  }
+
+  if( fA == true && s3 == true){
+    ws_width = 297 / cal;
+    ws_height = 420 / cal;
+    println("A3");
+  }
+
+  if( fA == true && s4 == true){
+    ws_width = 210 / cal;
+    ws_height = 297 / cal;
+    println("A4");
+  }
+
+  if( fA == true && s5 == true){
+    ws_width = 148 / cal;
+    ws_height = 210 / cal;
+    println("A5");
+  }
+
+  if( fA == true && s6 == true){
+    ws_width = 105 / cal;
+    ws_height = 148 / cal;
+    println("A6"); 
+  }
 
   pushMatrix();
   scale(zoom);
@@ -305,7 +352,6 @@ public void ws_display() {
 }
 
 public void ws_info(){
-  float cal = 0.282222f;
   
   fill(0);
   pushMatrix();
@@ -348,12 +394,34 @@ public void keyPressed() {
     zoom -= 0.1f;
     // println("[   zoom   ]"+" - 0.1 ");
   }
+
+  if (key == 'a') fA = true; 
+  if (key == 'b') fB = true;
+  if (key == '0') s0 = true;
+  if (key == '1') s1 = true;
+  if (key == '2') s2 = true;
+  if (key == '3') s3 = true;
+  if (key == '4') s4 = true;
+  if (key == '5') s5 = true;
+  if (key == '6') s6 = true;
+
+
 } 
 
 public void keyReleased() {
   if (key == 'h' || key == 'H' || key == ' ') {
     drag = false;
   }
+
+  if (key == 'a') fA = false; 
+  if (key == 'b') fB = false;
+  if (key == '0') s0 = false;
+  if (key == '1') s1 = false;
+  if (key == '2') s2 = false;
+  if (key == '3') s3 = false;
+  if (key == '4') s4 = false;
+  if (key == '5') s5 = false;
+  if (key == '6') s6 = false;
 }
 
 // Store the mouse and the previous offset
