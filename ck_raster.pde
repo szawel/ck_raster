@@ -210,6 +210,7 @@ void draw() {
   scale(zoom);
   translate(offset.x/zoom, offset.y/zoom);
   ws_display();
+  info();
   popMatrix();
 
   if (selectPathToExportSVG == true) {
@@ -252,9 +253,10 @@ void draw() {
     selectPathToExportSVG = false;
   }
 
+
   noStroke();
   fill(255,255,255,200);
-  rect(50,50,450,450);
+  rect(0,50,500,450);
   rect(50, 50, 350, 30);
   shape(logo, 50, 50);
   // shape(logo, 50, 50, 350, 30);
