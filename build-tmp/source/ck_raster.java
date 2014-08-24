@@ -446,13 +446,7 @@ public void temp_info() {
   popMatrix();
 }
 public void info(){
-	fill(0);
-	// rect(ws_width,0,50,100);
-	pushMatrix();
-	translate(ws_width,0);
-	text(" szeroko\u015b\u0107 " + PApplet.parseInt(ws_width) + " px",0,8);
-	text(" wysoko\u015b\u0107  " + PApplet.parseInt(ws_height) + " px",0,20);
-	popMatrix();
+	ellipse(50, 50, 500, 500);
 }
 // funkcja usrala koordynaty puknkt\u00f3w potrzebne 
 public float[][] points(float _y,boolean seg_nr){
