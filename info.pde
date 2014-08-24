@@ -56,7 +56,7 @@ void info(){
 	textFont(font_a);
 	text(" RESET ",20,260);
 	textFont(font_b);
-	text(" [ r ] ",20,280);
+	text(" [ Shift ] + [ r ] ",20,280);
 
 	textFont(font_a);
 	text(" PRESETY ",20,300);

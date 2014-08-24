@@ -267,6 +267,7 @@ public void draw() {
   pen = new BasicStroke(l_weight, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4.0f, _dash, 0);
   Graphics2D g2 = ((PGraphicsJava2D) g).g2;
   g2.setStroke(pen);
+  ws_info();
 
   for (int i = 0; i < ( ws_height / l_int_lin ); i++) {
     qcur(points( i * l_int_lin , false));
@@ -301,6 +302,28 @@ public void ws_display() {
   fill(255);
   rect(0, 0, ws_width, ws_height);
   // line_grid(ws_width, ws_height, 50);
+}
+
+public void ws_info(){
+  float cal = 0.282222f;
+  
+  fill(0);
+  pushMatrix();
+  translate(ws_width,-10);
+  text(" szeroko\u015b\u0107 ",10,20);
+  text(ws_width,10,40);
+  text(" px ", 70,40);
+  text(ws_width * cal,10,60);
+  text(" mm ", 70,60);
+
+  text(" wysoko\u015b\u0107 ",10,80);
+  text(ws_height,10,100);
+  text(" px ", 70,100);
+  text(ws_height * cal,10,120);
+  text(" mm ", 70,120);
+
+  popMatrix();
+  noFill();
 }
 
 public void keyPressed() {
@@ -525,7 +548,7 @@ public void info(){
 	textFont(font_a);
 	text(" RESET ",20,260);
 	textFont(font_b);
-	text(" [ r ] ",20,280);
+	text(" [ Shift ] + [ r ] ",20,280);
 
 	textFont(font_a);
 	text(" PRESETY ",20,300);
