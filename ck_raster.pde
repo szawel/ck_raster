@@ -14,6 +14,8 @@ Graphics2D  paper;
 BasicStroke pen;
 PShape logo;
 
+PFont ws_info_txt;
+
 
 //gui setup
 float bg_color = 255;
@@ -40,15 +42,20 @@ boolean record_svg = false;
 boolean selectPathToExportSVG = false;
 String exportPath = "";
 
+// --------------------------------------------- [ offset / zoom ]
 float zoom;
 PVector offset;
 PVector poffset;
 PVector mouse;
 boolean drag = false;
 
-//temp
-boolean info_swith = false;
+// --------------------------------------------- [ offset / zoom ]
+boolean info_toggle = false;
+boolean preset_toggle = false;
 
+String preset_format = "none";
+
+float count = 0;
 int seg_nr = 0;
 float cal = 0.282222;
 
@@ -222,43 +229,127 @@ void draw() {
   if( fA == true && s0 == true){
     ws_width = 841 / cal;
     ws_height = 1189 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A0";
     println("A0");
   }
 
   if( fA == true && s1 == true){
     ws_width = 594 / cal;
     ws_height = 841 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A1";
     println("A1");
   }
 
   if( fA == true && s2 == true){
     ws_width = 420 / cal;
     ws_height = 594 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A2";
     println("A2");
   }
 
   if( fA == true && s3 == true){
     ws_width = 297 / cal;
     ws_height = 420 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A3";
     println("A3");
   }
 
   if( fA == true && s4 == true){
     ws_width = 210 / cal;
     ws_height = 297 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A4";
     println("A4");
   }
 
   if( fA == true && s5 == true){
     ws_width = 148 / cal;
     ws_height = 210 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A5";
     println("A5");
   }
 
   if( fA == true && s6 == true){
     ws_width = 105 / cal;
     ws_height = 148 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "A6";
     println("A6"); 
+  }
+
+  if( fB == true && s0 == true){
+    ws_width = 1000 / cal;
+    ws_height = 1414 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B0";
+    println("B0");
+  }
+
+  if( fB == true && s1 == true){
+    ws_width = 707 / cal;
+    ws_height = 1000 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B1";
+    println("B1");
+  }
+
+  if( fB == true && s2 == true){
+    ws_width = 500 / cal;
+    ws_height = 707 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B2";
+    println("B2");
+  }
+
+  if( fB == true && s3 == true){
+    ws_width = 353 / cal;
+    ws_height = 500 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B3";
+    println("B3");
+  }
+
+  if( fB == true && s4 == true){
+    ws_width = 250 / cal;
+    ws_height = 353 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B4";
+    println("B4");
+  }
+
+  if( fB == true && s5 == true){
+    ws_width = 176 / cal;
+    ws_height = 250 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B5";
+    println("B5");
+  }
+
+  if( fB == true && s6 == true){
+    ws_width = 125 / cal;
+    ws_height = 176 / cal;
+    count = 0;
+    preset_toggle = true;
+    preset_format = "B6";
+    println("B6"); 
   }
 
   pushMatrix();
@@ -315,10 +406,15 @@ void draw() {
   rect(50, 50, 350, 30);
   // shape(logo, 50, 50, 350, 30);
 
-  if(info_swith == true){
+  if(info_toggle == true){
     info();
   }
   shape(logo, 50, 50);
+
+  if(preset_toggle == true){
+    counter();
+    preset_info(preset_format,counter());
+  }
   // info();
 
 }
@@ -331,26 +427,31 @@ void ws_display() {
   // line_grid(ws_width, ws_height, 50);
 }
 
-void ws_info(){
+// void ws_info(){
+
+
+//   ws_info_txt = createFont("PT Sans Pro",12);
+//   textFont(ws_info_txt);
+//   textAlign(LEFT);
   
-  fill(0);
-  pushMatrix();
-  translate(ws_width,-10);
-  text(" szerokość ",10,20);
-  text(ws_width,10,40);
-  text(" px ", 70,40);
-  text(ws_width * cal,10,60);
-  text(" mm ", 70,60);
+//   fill(0);
+//   pushMatrix();
+//   translate(ws_width,-10);
+//   text(" szerokość ",10,20);
+//   text(ws_width,10,40);
+//   text(" px ", 70,40);
+//   text(ws_width * cal,10,60);
+//   text(" mm ", 70,60);
 
-  text(" wysokość ",10,80);
-  text(ws_height,10,100);
-  text(" px ", 70,100);
-  text(ws_height * cal,10,120);
-  text(" mm ", 70,120);
+//   text(" wysokość ",10,80);
+//   text(ws_height,10,100);
+//   text(" px ", 70,100);
+//   text(ws_height * cal,10,120);
+//   text(" mm ", 70,120);
 
-  popMatrix();
-  noFill();
-}
+//   popMatrix();
+//   noFill();
+// }
 
 void keyPressed() {
 
@@ -451,12 +552,37 @@ void exportFileSVG(File selection) {
 
 void toggle(boolean theFlag) {
   if(theFlag==true) {
-    info_swith = true;
+    info_toggle = true;
   } else {
-    info_swith = false;
+    info_toggle = false;
   }
-  println(info_swith);
+  println(info_toggle);
 }
+
+float counter(){
+  if(count <= 50){
+    count++;
+  }
+  if(count == 50){
+    count = 50;
+    preset_toggle = false;
+  }
+  return count;
+}
+
+void preset_info(String str, float _con){
+  PFont preset_info_txt = loadFont("PTSansPro-Bold-62.vlw");
+  textFont(preset_info_txt);
+  textAlign(CENTER);
+  noStroke();
+  fill(0,map(_con,1,50,255,10));
+  text("FORMAT " + str,width/2,100);
+}
+
+
+
+
+
 
 
 

@@ -38,20 +38,20 @@ void info(){
 	
 	text(" PRZESUWANIE",20,80);
 	textFont(font_b);
-	text(" [ space ] + [ LMB ] ",20,100);
-	text(" [ h ] + [ LMB ] ",20,120);
+	text(" [ space ] + [ LMB ]  i  [ h ] + [ LMB ]",20,100);
+	// text(" [ h ] + [ LMB ] ",20,120);
 
 	textFont(font_a);
 	text(" POWIEKSZENIE ",20,140);
 	textFont(font_b);
-	text(" [ Ctrl ] + [ + ] ",20,160);
-	text(" [ scrol ] ",20,180);
+	text(" [ Ctrl ] + [ + ]  i  [ scrol ]",20,160);
+	// text(" [ scrol ] ",20,180);
 
 	textFont(font_a);
 	text(" POMNIEJSZENIE ",20,200);
 	textFont(font_b);
-	text(" [ Ctrl ] + [ - ] ",20,220);
-	text(" [ scrol ] ",20,240);
+	text(" [ Ctrl ] + [ - ]  i  [ scrol ]",20,220);
+	// text(" [ scrol ] ",20,240);
 
 	textFont(font_a);
 	text(" RESET ",20,260);
@@ -59,11 +59,39 @@ void info(){
 	text(" [ Shift ] + [ r ] ",20,280);
 
 	textFont(font_a);
-	text(" PRESETY ",20,300);
+	text(" FORMATY ",20,300);
 	textFont(font_b);
-	text(" [ Shift ] + [ 1 - 9 ] ",20,320);
+	text(" [ A ] + [ 0 - 6 ]  i  [ B ] + [ 0 - 6 ]",20,320);
+	// text(" [ b ] + [ 0 - 6 ] ",20,340);
 
 	text(" * [ LMB ] lewy przycisk myszy ",20,360);
 
 	popMatrix();
+}
+
+
+void ws_info(){
+
+
+  ws_info_txt = createFont("PT Sans Pro",12);
+  textFont(ws_info_txt);
+  textAlign(LEFT);
+  
+  fill(0);
+  pushMatrix();
+  translate(ws_width,-10);
+  text(" szerokość ",10,20);
+  text(ws_width,10,40);
+  text(" px ", 70,40);
+  text(ws_width * cal,10,50);
+  text(" mm ", 70,50);
+
+  text(" wysokość ",10,80);
+  text(ws_height,10,100);
+  text(" px ", 70,100);
+  text(ws_height * cal,10,110);
+  text(" mm ", 70,110);
+
+  popMatrix();
+  noFill();
 }
