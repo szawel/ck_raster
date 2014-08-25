@@ -37,7 +37,7 @@ float sin_amp = 20.85;
 int sin_freq = 2;
 float sin_bend = 0.5;
 
-// boolean record_pdf = false;
+
 boolean record_svg = false;
 boolean selectPathToExportSVG = false;
 String exportPath = "";
@@ -91,12 +91,6 @@ void setup() {
   cp5.setColorForeground(#000000);
   cp5.setColorBackground(#B4B4B4);
   cp5.setColorActive(#838383);
-  // ControlP5.captionLabel().toUpperCase(false);
-         // cp5.toUpperCase(false);
-
- // Slider s = cp5.addSlider("sliderSpeed",0,10,5,10,10,30,14); 
- //  s.captionLabel().set("slider speed");
-
  
   // --------------------------------------------- [ przestrzen robocza ]
 
@@ -133,7 +127,7 @@ void setup() {
   int linia_menu_h = 15;
 
   cp5.addTextlabel("linia")
-    .setText("PARAMETRY LINI")
+    .setText("PARAMETRY LINII")
       .setPosition(linia_menu_x, linia_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(#000000);
@@ -146,7 +140,7 @@ void setup() {
             ;
 
   Slider d = cp5.addSlider("l_int_val")
-    .setCaptionLabel("odtęp")
+    .setCaptionLabel("odstęp")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*2))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(0, 1)
@@ -160,7 +154,7 @@ void setup() {
             ;
 
   Slider f = cp5.addSlider("l_ofset")
-    .setCaptionLabel("ofset")
+    .setCaptionLabel("offset")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*4))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(0, 1)
@@ -180,7 +174,7 @@ void setup() {
   int sin_menu_h = 15;
 
   cp5.addTextlabel("sin")
-    .setText("WYGIENIE SIN")
+    .setText("WYGIĘCIE SINUSOIDALNE")
       .setPosition(sin_menu_x, sin_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(#000000);
@@ -193,14 +187,14 @@ Slider h = cp5.addSlider("sin_amp")
             ;
 
   Slider i = cp5.addSlider("sin_freq")
-    .setCaptionLabel("czestotliwość")
+    .setCaptionLabel("częstotliwość")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*2))
         .setSize(sin_menu_w, sin_menu_h)
           .setRange(1, 20)
             ;
 
   Slider j = cp5.addSlider("sin_bend")
-    .setCaptionLabel("wygiecie")
+    .setCaptionLabel("zaokrąglenie")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*3))
         .setSize(sin_menu_w, sin_menu_h)
           .setRange(0, 1)
@@ -228,11 +222,12 @@ Slider h = cp5.addSlider("sin_amp")
   i.captionLabel().toUpperCase(false);
   j.captionLabel().toUpperCase(false);
 
+  // work space defoult set
   ws_width = 600;
   ws_height = 200;
+
+
   // zoom end position offset   
-
-
   zoom = 1.0;
   offset = new PVector((displayWidth)/2, (displayHeight)/2);
   poffset = new PVector(0, 0);
@@ -240,7 +235,7 @@ Slider h = cp5.addSlider("sin_amp")
 
 void draw() {
 
-  // 
+  // presety formatów drukarskich
   float n_l_int_val = ( l_len * l_int_val );
   background(bg_color);
 
@@ -250,7 +245,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A0";
-    println("A0");
+    println("A0 - format drukarski");
   }
 
   if( fA == true && s1 == true){
@@ -259,7 +254,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A1";
-    println("A1");
+    println("A1 - format drukarski");
   }
 
   if( fA == true && s2 == true){
@@ -268,7 +263,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A2";
-    println("A2");
+    println("A2 - format drukarski");
   }
 
   if( fA == true && s3 == true){
@@ -277,7 +272,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A3";
-    println("A3");
+    println("A3 - format drukarski");
   }
 
   if( fA == true && s4 == true){
@@ -286,7 +281,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A4";
-    println("A4");
+    println("A4 - format drukarski");
   }
 
   if( fA == true && s5 == true){
@@ -295,7 +290,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A5";
-    println("A5");
+    println("A5 - format drukarski");
   }
 
   if( fA == true && s6 == true){
@@ -304,7 +299,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A6";
-    println("A6"); 
+    println("A6 - format drukarski"); 
   }
 
   if( fB == true && s0 == true){
@@ -313,7 +308,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B0";
-    println("B0");
+    println("B0 - format drukarski");
   }
 
   if( fB == true && s1 == true){
@@ -322,7 +317,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B1";
-    println("B1");
+    println("B1 - format drukarski");
   }
 
   if( fB == true && s2 == true){
@@ -331,7 +326,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B2";
-    println("B2");
+    println("B2 - format drukarski");
   }
 
   if( fB == true && s3 == true){
@@ -340,7 +335,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B3";
-    println("B3");
+    println("B3 - format drukarski");
   }
 
   if( fB == true && s4 == true){
@@ -349,7 +344,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B4";
-    println("B4");
+    println("B4 - format drukarski");
   }
 
   if( fB == true && s5 == true){
@@ -358,7 +353,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B5";
-    println("B5");
+    println("B5 - format drukarski");
   }
 
   if( fB == true && s6 == true){
@@ -367,7 +362,7 @@ void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B6";
-    println("B6"); 
+    println("B6 - format drukarski"); 
   }
 
   pushMatrix();
@@ -446,7 +441,6 @@ void ws_display() {
   strokeWeight(0.5);
   fill(255);
   rect(0, 0, ws_width, ws_height);
-  // line_grid(ws_width, ws_height, 50);
 }
 
 void keyPressed() {
@@ -455,7 +449,6 @@ void keyPressed() {
     zoom = 1;
     offset.x = 0;
     offset.y = 0;
-    // record_svg = true;
   }
 
   if (key == 'h' || key == 'H' || key == ' ') {
@@ -466,10 +459,10 @@ void keyPressed() {
 
   if (key == '=') {
     zoom += 0.1;
-    // println("[   zoom   ]"+" + 0.1 ");
+
   } else if (key == '-') {
     zoom -= 0.1;
-    // println("[   zoom   ]"+" - 0.1 ");
+
   }
 
   if (key == 'a') fA = true; 
@@ -552,7 +545,7 @@ void toggle(boolean theFlag) {
   } else {
     info_toggle = false;
   }
-  println(info_toggle);
+  // println(info_toggle);
 }
 
 float counter(){

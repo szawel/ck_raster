@@ -57,7 +57,7 @@ float sin_amp = 20.85f;
 int sin_freq = 2;
 float sin_bend = 0.5f;
 
-// boolean record_pdf = false;
+
 boolean record_svg = false;
 boolean selectPathToExportSVG = false;
 String exportPath = "";
@@ -111,12 +111,6 @@ public void setup() {
   cp5.setColorForeground(0xff000000);
   cp5.setColorBackground(0xffB4B4B4);
   cp5.setColorActive(0xff838383);
-  // ControlP5.captionLabel().toUpperCase(false);
-         // cp5.toUpperCase(false);
-
- // Slider s = cp5.addSlider("sliderSpeed",0,10,5,10,10,30,14); 
- //  s.captionLabel().set("slider speed");
-
  
   // --------------------------------------------- [ przestrzen robocza ]
 
@@ -153,7 +147,7 @@ public void setup() {
   int linia_menu_h = 15;
 
   cp5.addTextlabel("linia")
-    .setText("PARAMETRY LINI")
+    .setText("PARAMETRY LINII")
       .setPosition(linia_menu_x, linia_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
@@ -166,7 +160,7 @@ public void setup() {
             ;
 
   Slider d = cp5.addSlider("l_int_val")
-    .setCaptionLabel("odt\u0119p")
+    .setCaptionLabel("odst\u0119p")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*2))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(0, 1)
@@ -180,7 +174,7 @@ public void setup() {
             ;
 
   Slider f = cp5.addSlider("l_ofset")
-    .setCaptionLabel("ofset")
+    .setCaptionLabel("offset")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*4))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(0, 1)
@@ -200,7 +194,7 @@ public void setup() {
   int sin_menu_h = 15;
 
   cp5.addTextlabel("sin")
-    .setText("WYGIENIE SIN")
+    .setText("WYGI\u0118CIE SINUSOIDALNE")
       .setPosition(sin_menu_x, sin_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
@@ -213,14 +207,14 @@ Slider h = cp5.addSlider("sin_amp")
             ;
 
   Slider i = cp5.addSlider("sin_freq")
-    .setCaptionLabel("czestotliwo\u015b\u0107")
+    .setCaptionLabel("cz\u0119stotliwo\u015b\u0107")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*2))
         .setSize(sin_menu_w, sin_menu_h)
           .setRange(1, 20)
             ;
 
   Slider j = cp5.addSlider("sin_bend")
-    .setCaptionLabel("wygiecie")
+    .setCaptionLabel("zaokr\u0105glenie")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*3))
         .setSize(sin_menu_w, sin_menu_h)
           .setRange(0, 1)
@@ -248,11 +242,12 @@ Slider h = cp5.addSlider("sin_amp")
   i.captionLabel().toUpperCase(false);
   j.captionLabel().toUpperCase(false);
 
+  // work space defoult set
   ws_width = 600;
   ws_height = 200;
+
+
   // zoom end position offset   
-
-
   zoom = 1.0f;
   offset = new PVector((displayWidth)/2, (displayHeight)/2);
   poffset = new PVector(0, 0);
@@ -260,7 +255,7 @@ Slider h = cp5.addSlider("sin_amp")
 
 public void draw() {
 
-  // 
+  // presety format\u00f3w drukarskich
   float n_l_int_val = ( l_len * l_int_val );
   background(bg_color);
 
@@ -270,7 +265,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A0";
-    println("A0");
+    println("A0 - format drukarski");
   }
 
   if( fA == true && s1 == true){
@@ -279,7 +274,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A1";
-    println("A1");
+    println("A1 - format drukarski");
   }
 
   if( fA == true && s2 == true){
@@ -288,7 +283,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A2";
-    println("A2");
+    println("A2 - format drukarski");
   }
 
   if( fA == true && s3 == true){
@@ -297,7 +292,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A3";
-    println("A3");
+    println("A3 - format drukarski");
   }
 
   if( fA == true && s4 == true){
@@ -306,7 +301,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A4";
-    println("A4");
+    println("A4 - format drukarski");
   }
 
   if( fA == true && s5 == true){
@@ -315,7 +310,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A5";
-    println("A5");
+    println("A5 - format drukarski");
   }
 
   if( fA == true && s6 == true){
@@ -324,7 +319,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "A6";
-    println("A6"); 
+    println("A6 - format drukarski"); 
   }
 
   if( fB == true && s0 == true){
@@ -333,7 +328,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B0";
-    println("B0");
+    println("B0 - format drukarski");
   }
 
   if( fB == true && s1 == true){
@@ -342,7 +337,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B1";
-    println("B1");
+    println("B1 - format drukarski");
   }
 
   if( fB == true && s2 == true){
@@ -351,7 +346,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B2";
-    println("B2");
+    println("B2 - format drukarski");
   }
 
   if( fB == true && s3 == true){
@@ -360,7 +355,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B3";
-    println("B3");
+    println("B3 - format drukarski");
   }
 
   if( fB == true && s4 == true){
@@ -369,7 +364,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B4";
-    println("B4");
+    println("B4 - format drukarski");
   }
 
   if( fB == true && s5 == true){
@@ -378,7 +373,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B5";
-    println("B5");
+    println("B5 - format drukarski");
   }
 
   if( fB == true && s6 == true){
@@ -387,7 +382,7 @@ public void draw() {
     count = 0;
     preset_toggle = true;
     preset_format = "B6";
-    println("B6"); 
+    println("B6 - format drukarski"); 
   }
 
   pushMatrix();
@@ -466,7 +461,6 @@ public void ws_display() {
   strokeWeight(0.5f);
   fill(255);
   rect(0, 0, ws_width, ws_height);
-  // line_grid(ws_width, ws_height, 50);
 }
 
 public void keyPressed() {
@@ -475,7 +469,6 @@ public void keyPressed() {
     zoom = 1;
     offset.x = 0;
     offset.y = 0;
-    // record_svg = true;
   }
 
   if (key == 'h' || key == 'H' || key == ' ') {
@@ -486,10 +479,10 @@ public void keyPressed() {
 
   if (key == '=') {
     zoom += 0.1f;
-    // println("[   zoom   ]"+" + 0.1 ");
+
   } else if (key == '-') {
     zoom -= 0.1f;
-    // println("[   zoom   ]"+" - 0.1 ");
+
   }
 
   if (key == 'a') fA = true; 
@@ -572,7 +565,7 @@ public void toggle(boolean theFlag) {
   } else {
     info_toggle = false;
   }
-  println(info_toggle);
+  // println(info_toggle);
 }
 
 public float counter(){
@@ -668,71 +661,65 @@ public void temp_info() {
 
   popMatrix();
 }
-PFont font_a, font_b,font_c;
+PFont font_b,font_c;
 public void info(){
-	font_a = loadFont("PTSansPro-Regular-12.vlw");
+	/*
+	menu info opisy 
+	*/
+
 	font_b = loadFont("PTSansPro-Regular-12.vlw");
+	
 	fill(255);
 	strokeWeight(1);
 	stroke(0);
+	
+	// t\u0142o menu info
 	rect(0,50,950,430);
 
+	// --------------------------------------------- [ opis do menu ]
 	noStroke();
-
 	fill(0);
+
 	pushMatrix();	
 	translate(415,51);
-	// rect(0,0,50,50);
-	textFont(font_a);
-	// text("   INFO ",20,60);
+	
+
 	textFont(font_b);
-	text(" - obszaru roboczego i obszaru exportu ",43,80);
-	text(" - obszaru roboczego i obszaru exportu ",41,100);
+	text(" \u2013 obszaru roboczego i obszaru eksportu ",43,80);
+	text(" \u2013 obszaru roboczego i obszaru eksportu ",41,100);
 
-	text(" - pojedy\u0144czej lini ",33,150);
-	text(" - pomi\u0119dazy liniami ",22,170);
-	text(" - pomiedzy wierszami ",40,190);
-	text(" - co drugiej lini ",20,210);
-	text(" - loini ",33,230);
+	text(" \u2013 pojedy\u0144czej linii ",33,150);
+	text(" \u2013 pomi\u0119dzy liniami ",26,170);
+	text(" \u2013 pomi\u0119dzy wierszami ",40,190);
+	text(" \u2013 co drugiej linii ",20,210);
+	text(" \u2013 linii ",33,230);
 
-	text(" - wygiecia ",43,280);
-	text(" - powt\u00f3rze\u0144 wygiecia ",63,300);
-	text(" - ??? ",37,320);
+	text(" \u2013 sinusa ",43,280);
+	text(" \u2013 powt\u00f3rze\u0144 sinusa ",63,300);
+	text(" \u2013 wygi\u0119cia ",57,320);
 
 	popMatrix();
 
+	// --------------------------------------------- [ opis do skr\u00f3t\u00f3w klawiaturowych ]
 	pushMatrix();	
 	translate(680,50);
-	textFont(font_a);
+
 	text(" SHORTCUT ",20,60);
 	
-	textFont(font_b);
 	text(" przesuwanie",20,80);
 	text(" [ space ] + [ LMB ]  lub  [ h ] + [ LMB ]",20,100);
-	// text(" [ h ] + [ LMB ] ",20,120);
 
-	// textFont(font_a);
 	text(" powi\u0119kszanie | zoom in",20,140);
-	textFont(font_b);
 	text(" [ Ctrl ] + [ + ]  lub  [ scrol ]",20,160);
-	// text(" [ scrol ] ",20,180);
 
-	// textFont(font_a);
 	text(" pomniejszanie | zoom out ",20,200);
-	textFont(font_b);
 	text(" [ Ctrl ] + [ - ]  lub  [ scrol ]",20,220);
-	// text(" [ scrol ] ",20,240);
 
-	// textFont(font_a);
-	text(" presety format\u00f3w ",20,260);
-	textFont(font_b);
-	text(" [ A ] + [ 0 - 6 ]  i  [ B ] + [ 0 - 6 ]",20,280);
+	text(" formaty drukarskie ",20,260);
+	text(" [ A ] + [ 0 \u2013 6 ]  i  [ B ] + [ 0 \u2013 6 ]",20,280);
 
-	// textFont(font_a);
 	text(" viewport reset ",20,320);
-	textFont(font_b);
 	text(" [ Shift ] + [ r ] ",20,340);
-	// text(" [ b ] + [ 0 - 6 ] ",20,340);
 
 	text(" * [ LMB ] lewy przycisk myszy ",20,380);
 
@@ -741,7 +728,11 @@ public void info(){
 
 
 public void ws_info(){
-
+	/*
+	boczne menu z informacja
+	o szeroko\u015bci i wysoko\u015bci
+	z przeliczeniem na 'mm'
+	*/
 
   ws_info_txt = createFont("PT Sans Pro",12);
   textFont(ws_info_txt);
@@ -753,20 +744,25 @@ public void ws_info(){
   text(" szeroko\u015b\u0107 ",10,20);
   text(ws_width,10,40);
   text(" px ", 70,40);
-  text(ws_width * cal,10,50);
-  text(" mm ", 70,50);
+  text(ws_width * cal,10,60);
+  text(" mm ", 70,60);
 
-  text(" wysoko\u015b\u0107 ",10,80);
-  text(ws_height,10,100);
-  text(" px ", 70,100);
-  text(ws_height * cal,10,110);
-  text(" mm ", 70,110);
+  text(" wysoko\u015b\u0107 ",10,100);
+  text(ws_height,10,120);
+  text(" px ", 70,120);
+  text(ws_height * cal,10,140);
+  text(" mm ", 70,140);
 
   popMatrix();
   noFill();
 }
 
 public void info_b(){
+	/*
+	boczne menu z informacja
+	o klatkarzu i o zoomie w procentach
+	*/
+
 	fill(0);
 	font_c = loadFont("PTSansPro-Regular-12.vlw");
 	textFont(font_c);
@@ -775,6 +771,10 @@ public void info_b(){
 }
 
 public void preset_info(String str, float _con){
+	/*
+	popup info o wybranym formacie drukarski
+	*/
+
   PFont preset_info_txt = loadFont("PTSansPro-Bold-62.vlw");
   textFont(preset_info_txt);
   textAlign(CENTER);
@@ -790,7 +790,7 @@ public void preset_info(String str, float _con){
   text("FORMAT " + str,width/2,100);
 }
 
-// funkcja usrala koordynaty puknkt\u00f3w potrzebne 
+// funkcja 
 public float[][] points(float _y,boolean seg_nr){
 	float x , y;
 	float nr = (sin_freq*6);

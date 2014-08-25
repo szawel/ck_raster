@@ -1,4 +1,4 @@
-// funkcja usrala koordynaty puknktów potrzebne 
+// funkcja 
 float[][] points(float _y,boolean seg_nr){
 	float x , y;
 	float nr = (sin_freq*6);
