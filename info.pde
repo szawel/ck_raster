@@ -11,7 +11,7 @@ void info(){
 
 	fill(0);
 	pushMatrix();	
-	translate(410,50);
+	translate(415,51);
 	// rect(0,0,50,50);
 	textFont(font_a);
 	// text("   INFO ",20,60);
@@ -25,9 +25,9 @@ void info(){
 	text(" - co drugiej lini ",20,210);
 	text(" - loini ",33,230);
 
-	text(" - wygiecia ",40,280);
+	text(" - wygiecia ",43,280);
 	text(" - powtórzeń wygiecia ",63,300);
-	text(" - ??? ",34,320);
+	text(" - ??? ",37,320);
 
 	popMatrix();
 

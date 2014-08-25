@@ -32,7 +32,7 @@ ControlP5 cp5;
 Graphics2D  screen;
 Graphics2D  paper;
 BasicStroke pen;
-PShape logo;
+PShape logo, logo_txt;
 
 PFont ws_info_txt;
 
@@ -70,7 +70,7 @@ PVector mouse;
 boolean drag = false;
 
 // --------------------------------------------- [ offset / zoom ]
-boolean info_toggle = true;
+boolean info_toggle = false;
 boolean preset_toggle = false;
 
 String preset_format = "none";
@@ -97,19 +97,27 @@ public void setup() {
   size(displayWidth, displayHeight);
 
   logo = loadShape("logo.svg");
+  logo_txt = loadShape("logo_txt.svg");
 
 
   smooth();
   noStroke();  
   cp5 = new ControlP5(this);
-  PFont p = loadFont("PTSansPro-Regular-9.vlw");
+  PFont p = loadFont("PTSansPro-Regular-12.vlw");
+  ControlFont font = new ControlFont(p, 12);
 
   cp5.setControlFont(p);
   cp5.setColorLabel(0xff000000);
   cp5.setColorForeground(0xff000000);
   cp5.setColorBackground(0xffB4B4B4);
   cp5.setColorActive(0xff838383);
+  // ControlP5.captionLabel().toUpperCase(false);
+         // cp5.toUpperCase(false);
 
+ // Slider s = cp5.addSlider("sliderSpeed",0,10,5,10,10,30,14); 
+ //  s.captionLabel().set("slider speed");
+
+ 
   // --------------------------------------------- [ przestrzen robocza ]
 
   float ws_menu_x = 50;
@@ -122,20 +130,20 @@ public void setup() {
     .setText("PRZESTRZE\u0143 ROBOCZA")
       .setPosition(ws_menu_x, ws_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
-        .setColorValue(0xff000000);
+          .setColorValue(0xff000000);
 
-  cp5.addSlider("ws_width")
+  Slider a = cp5.addSlider("ws_width")
     .setCaptionLabel("szeroko\u015b\u0107")
       .setPosition(ws_menu_x, ws_menu_y+ws_menu_s)
         .setSize(ws_menu_w, ws_menu_h)
-          .setRange(100, 1000)
+          .setRange(100, 3000)
             ;
 
-  cp5.addSlider("ws_height")
+  Slider b = cp5.addSlider("ws_height")
     .setCaptionLabel("wysoko\u015b\u0107")
       .setPosition(ws_menu_x, ws_menu_y+(ws_menu_s*2))
         .setSize(ws_menu_w, ws_menu_h)
-          .setRange(100, 1000)
+          .setRange(100, 3000)
             ;
 
   float linia_menu_x = 50;
@@ -150,35 +158,35 @@ public void setup() {
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
 
-  cp5.addSlider("l_len")
+  Slider c = cp5.addSlider("l_len")
     .setCaptionLabel("d\u0142ugo\u015b\u0107")
       .setPosition(linia_menu_x, linia_menu_y+linia_menu_s)
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(7, 100)
             ;
 
-  cp5.addSlider("l_int_val")
+  Slider d = cp5.addSlider("l_int_val")
     .setCaptionLabel("odt\u0119p")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*2))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(0, 1)
             ;
 
-  cp5.addSlider("l_int_lin")
+  Slider e = cp5.addSlider("l_int_lin")
     .setCaptionLabel("interlinia")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*3))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(5, 50)
             ;
 
-  cp5.addSlider("l_ofset")
+  Slider f = cp5.addSlider("l_ofset")
     .setCaptionLabel("ofset")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*4))
         .setSize(linia_menu_w, linia_menu_h)
           .setRange(0, 1)
             ;
 
-  cp5.addSlider("l_weight")
+  Slider g = cp5.addSlider("l_weight")
     .setCaptionLabel("grubo\u015b\u0107")
       .setPosition(linia_menu_x, linia_menu_y+(linia_menu_s*5))
         .setSize(linia_menu_w, linia_menu_h)
@@ -192,26 +200,26 @@ public void setup() {
   int sin_menu_h = 15;
 
   cp5.addTextlabel("sin")
-    .setText("WYGI\u0118CIE")
+    .setText("WYGIENIE SIN")
       .setPosition(sin_menu_x, sin_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
         .setColorValue(0xff000000);
 
-  cp5.addSlider("sin_amp")
+Slider h = cp5.addSlider("sin_amp")
     .setCaptionLabel("amplituda")
       .setPosition(sin_menu_x, sin_menu_y+sin_menu_s)
         .setSize(sin_menu_w, sin_menu_h)
           .setRange(0, 100)
             ;
 
-  cp5.addSlider("sin_freq")
+  Slider i = cp5.addSlider("sin_freq")
     .setCaptionLabel("czestotliwo\u015b\u0107")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*2))
         .setSize(sin_menu_w, sin_menu_h)
           .setRange(1, 20)
             ;
 
-  cp5.addSlider("sin_bend")
+  Slider j = cp5.addSlider("sin_bend")
     .setCaptionLabel("wygiecie")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*3))
         .setSize(sin_menu_w, sin_menu_h)
@@ -229,6 +237,16 @@ public void setup() {
     .setLabel("INFO")
       .setPosition(sin_menu_x, sin_menu_y+(sin_menu_s*7))
         .setSize(50, 20);
+  a.captionLabel().toUpperCase(false);
+  b.captionLabel().toUpperCase(false);
+  c.captionLabel().toUpperCase(false);
+  d.captionLabel().toUpperCase(false);
+  e.captionLabel().toUpperCase(false);
+  f.captionLabel().toUpperCase(false);
+  g.captionLabel().toUpperCase(false);
+  h.captionLabel().toUpperCase(false);
+  i.captionLabel().toUpperCase(false);
+  j.captionLabel().toUpperCase(false);
 
   ws_width = 600;
   ws_height = 200;
@@ -375,6 +393,7 @@ public void draw() {
   pushMatrix();
   scale(zoom);
   translate(offset.x/zoom, offset.y/zoom);
+  ws_info();
   ws_display();
   popMatrix();
 
@@ -405,7 +424,6 @@ public void draw() {
   pen = new BasicStroke(l_weight, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 4.0f, _dash, 0);
   Graphics2D g2 = ((PGraphicsJava2D) g).g2;
   g2.setStroke(pen);
-  ws_info();
 
   for (int i = 0; i < ( ws_height / l_int_lin ); i++) {
     qcur(points( i * l_int_lin , false));
@@ -429,7 +447,10 @@ public void draw() {
   if(info_toggle == true){
     info();
   }
+  noSmooth();
   shape(logo, 50, 50);
+  smooth();
+  shape(logo_txt,50, 50);
 
   if(preset_toggle == true){
     counter();
@@ -660,7 +681,7 @@ public void info(){
 
 	fill(0);
 	pushMatrix();	
-	translate(410,50);
+	translate(415,51);
 	// rect(0,0,50,50);
 	textFont(font_a);
 	// text("   INFO ",20,60);
@@ -674,9 +695,9 @@ public void info(){
 	text(" - co drugiej lini ",20,210);
 	text(" - loini ",33,230);
 
-	text(" - wygiecia ",40,280);
+	text(" - wygiecia ",43,280);
 	text(" - powt\u00f3rze\u0144 wygiecia ",63,300);
-	text(" - ??? ",34,320);
+	text(" - ??? ",37,320);
 
 	popMatrix();
 
