@@ -415,6 +415,7 @@ void draw() {
     counter();
     preset_info(preset_format,counter());
   }
+  info_b();
   // info();
 
 }
@@ -426,32 +427,6 @@ void ws_display() {
   rect(0, 0, ws_width, ws_height);
   // line_grid(ws_width, ws_height, 50);
 }
-
-// void ws_info(){
-
-
-//   ws_info_txt = createFont("PT Sans Pro",12);
-//   textFont(ws_info_txt);
-//   textAlign(LEFT);
-  
-//   fill(0);
-//   pushMatrix();
-//   translate(ws_width,-10);
-//   text(" szerokość ",10,20);
-//   text(ws_width,10,40);
-//   text(" px ", 70,40);
-//   text(ws_width * cal,10,60);
-//   text(" mm ", 70,60);
-
-//   text(" wysokość ",10,80);
-//   text(ws_height,10,100);
-//   text(" px ", 70,100);
-//   text(ws_height * cal,10,120);
-//   text(" mm ", 70,120);
-
-//   popMatrix();
-//   noFill();
-// }
 
 void keyPressed() {
 
@@ -560,27 +535,15 @@ void toggle(boolean theFlag) {
 }
 
 float counter(){
-  if(count <= 50){
+  if(count <= 200){
     count++;
   }
-  if(count == 50){
-    count = 50;
+  if(count == 200){
+    count = 200;
     preset_toggle = false;
   }
   return count;
 }
-
-void preset_info(String str, float _con){
-  PFont preset_info_txt = loadFont("PTSansPro-Bold-62.vlw");
-  textFont(preset_info_txt);
-  textAlign(CENTER);
-  noStroke();
-  fill(0,map(_con,1,50,255,10));
-  text("FORMAT " + str,width/2,100);
-}
-
-
-
 
 
 

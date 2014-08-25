@@ -1,70 +1,70 @@
-PFont font_a, font_b;
+PFont font_a, font_b,font_c;
 void info(){
 	font_a = loadFont("PTSansPro-Regular-12.vlw");
-	font_b = loadFont("PTSansPro-Italic-12.vlw");
+	font_b = loadFont("PTSansPro-Regular-12.vlw");
 	fill(255);
 	strokeWeight(1);
 	stroke(0);
-	rect(0,50,900,430);
+	rect(0,50,950,430);
 
 	noStroke();
 
 	fill(0);
 	pushMatrix();	
-	translate(455,50);
+	translate(410,50);
 	// rect(0,0,50,50);
 	textFont(font_a);
-	text("   INFO ",20,60);
+	// text("   INFO ",20,60);
 	textFont(font_b);
-	text(" - obszaru roboczego i obszaru exportu ",20,80);
-	text(" - obszaru roboczego i obszaru exportu ",20,100);
+	text(" - obszaru roboczego i obszaru exportu ",43,80);
+	text(" - obszaru roboczego i obszaru exportu ",41,100);
 
-	text(" - pojedyńczej lini ",20,150);
-	text(" - pomiędazy liniami ",20,170);
-	text(" - pomiedzy wierszami ",20,190);
+	text(" - pojedyńczej lini ",33,150);
+	text(" - pomiędazy liniami ",22,170);
+	text(" - pomiedzy wierszami ",40,190);
 	text(" - co drugiej lini ",20,210);
-	text(" - loini ",20,230);
+	text(" - loini ",33,230);
 
-	text(" - wygiecia ",20,280);
-	text(" - powtórzeń wygiecia ",20,300);
-	text(" - ??? ",20,320);
+	text(" - wygiecia ",40,280);
+	text(" - powtórzeń wygiecia ",63,300);
+	text(" - ??? ",34,320);
 
 	popMatrix();
 
 	pushMatrix();	
-	translate(700,50);
+	translate(680,50);
 	textFont(font_a);
 	text(" SHORTCUT ",20,60);
 	
-	text(" PRZESUWANIE",20,80);
 	textFont(font_b);
-	text(" [ space ] + [ LMB ]  i  [ h ] + [ LMB ]",20,100);
+	text(" przesuwanie",20,80);
+	text(" [ space ] + [ LMB ]  lub  [ h ] + [ LMB ]",20,100);
 	// text(" [ h ] + [ LMB ] ",20,120);
 
-	textFont(font_a);
-	text(" POWIEKSZENIE ",20,140);
+	// textFont(font_a);
+	text(" powiększanie | zoom in",20,140);
 	textFont(font_b);
-	text(" [ Ctrl ] + [ + ]  i  [ scrol ]",20,160);
+	text(" [ Ctrl ] + [ + ]  lub  [ scrol ]",20,160);
 	// text(" [ scrol ] ",20,180);
 
-	textFont(font_a);
-	text(" POMNIEJSZENIE ",20,200);
+	// textFont(font_a);
+	text(" pomniejszanie | zoom out ",20,200);
 	textFont(font_b);
-	text(" [ Ctrl ] + [ - ]  i  [ scrol ]",20,220);
+	text(" [ Ctrl ] + [ - ]  lub  [ scrol ]",20,220);
 	// text(" [ scrol ] ",20,240);
 
-	textFont(font_a);
-	text(" RESET ",20,260);
+	// textFont(font_a);
+	text(" presety formatów ",20,260);
 	textFont(font_b);
-	text(" [ Shift ] + [ r ] ",20,280);
+	text(" [ A ] + [ 0 - 6 ]  i  [ B ] + [ 0 - 6 ]",20,280);
 
-	textFont(font_a);
-	text(" FORMATY ",20,300);
+	// textFont(font_a);
+	text(" viewport reset ",20,320);
 	textFont(font_b);
-	text(" [ A ] + [ 0 - 6 ]  i  [ B ] + [ 0 - 6 ]",20,320);
+	text(" [ Shift ] + [ r ] ",20,340);
 	// text(" [ b ] + [ 0 - 6 ] ",20,340);
 
-	text(" * [ LMB ] lewy przycisk myszy ",20,360);
+	text(" * [ LMB ] lewy przycisk myszy ",20,380);
 
 	popMatrix();
 }
@@ -95,3 +95,28 @@ void ws_info(){
   popMatrix();
   noFill();
 }
+
+void info_b(){
+	fill(0);
+	font_c = loadFont("PTSansPro-Regular-12.vlw");
+	textFont(font_c);
+	textAlign(RIGHT);
+	text(" fps : " + int(frameRate) + " | " + " zoom : " + int(zoom * 100) + " %",width-10,20);
+}
+
+void preset_info(String str, float _con){
+  PFont preset_info_txt = loadFont("PTSansPro-Bold-62.vlw");
+  textFont(preset_info_txt);
+  textAlign(CENTER);
+  noStroke();
+
+	fill(255,map(_con,1,50,255,10));
+  pushMatrix();
+  translate((width-350)/2,50);
+  rect(0,0,350,60);
+  popMatrix();
+
+  fill(0,map(_con,1,50,255,10));
+  text("FORMAT " + str,width/2,100);
+}
+

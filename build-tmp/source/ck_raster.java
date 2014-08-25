@@ -70,7 +70,7 @@ PVector mouse;
 boolean drag = false;
 
 // --------------------------------------------- [ offset / zoom ]
-boolean info_toggle = false;
+boolean info_toggle = true;
 boolean preset_toggle = false;
 
 String preset_format = "none";
@@ -435,6 +435,7 @@ public void draw() {
     counter();
     preset_info(preset_format,counter());
   }
+  info_b();
   // info();
 
 }
@@ -446,32 +447,6 @@ public void ws_display() {
   rect(0, 0, ws_width, ws_height);
   // line_grid(ws_width, ws_height, 50);
 }
-
-// void ws_info(){
-
-
-//   ws_info_txt = createFont("PT Sans Pro",12);
-//   textFont(ws_info_txt);
-//   textAlign(LEFT);
-  
-//   fill(0);
-//   pushMatrix();
-//   translate(ws_width,-10);
-//   text(" szeroko\u015b\u0107 ",10,20);
-//   text(ws_width,10,40);
-//   text(" px ", 70,40);
-//   text(ws_width * cal,10,60);
-//   text(" mm ", 70,60);
-
-//   text(" wysoko\u015b\u0107 ",10,80);
-//   text(ws_height,10,100);
-//   text(" px ", 70,100);
-//   text(ws_height * cal,10,120);
-//   text(" mm ", 70,120);
-
-//   popMatrix();
-//   noFill();
-// }
 
 public void keyPressed() {
 
@@ -580,27 +555,15 @@ public void toggle(boolean theFlag) {
 }
 
 public float counter(){
-  if(count <= 50){
+  if(count <= 200){
     count++;
   }
-  if(count == 50){
-    count = 50;
+  if(count == 200){
+    count = 200;
     preset_toggle = false;
   }
   return count;
 }
-
-public void preset_info(String str, float _con){
-  PFont preset_info_txt = loadFont("PTSansPro-Bold-62.vlw");
-  textFont(preset_info_txt);
-  textAlign(CENTER);
-  noStroke();
-  fill(0,map(_con,1,50,255,10));
-  text("FORMAT " + str,width/2,100);
-}
-
-
-
 
 
 
@@ -684,73 +647,73 @@ public void temp_info() {
 
   popMatrix();
 }
-PFont font_a, font_b;
+PFont font_a, font_b,font_c;
 public void info(){
 	font_a = loadFont("PTSansPro-Regular-12.vlw");
-	font_b = loadFont("PTSansPro-Italic-12.vlw");
+	font_b = loadFont("PTSansPro-Regular-12.vlw");
 	fill(255);
 	strokeWeight(1);
 	stroke(0);
-	rect(0,50,900,430);
+	rect(0,50,950,430);
 
 	noStroke();
 
 	fill(0);
 	pushMatrix();	
-	translate(455,50);
+	translate(410,50);
 	// rect(0,0,50,50);
 	textFont(font_a);
-	text("   INFO ",20,60);
+	// text("   INFO ",20,60);
 	textFont(font_b);
-	text(" - obszaru roboczego i obszaru exportu ",20,80);
-	text(" - obszaru roboczego i obszaru exportu ",20,100);
+	text(" - obszaru roboczego i obszaru exportu ",43,80);
+	text(" - obszaru roboczego i obszaru exportu ",41,100);
 
-	text(" - pojedy\u0144czej lini ",20,150);
-	text(" - pomi\u0119dazy liniami ",20,170);
-	text(" - pomiedzy wierszami ",20,190);
+	text(" - pojedy\u0144czej lini ",33,150);
+	text(" - pomi\u0119dazy liniami ",22,170);
+	text(" - pomiedzy wierszami ",40,190);
 	text(" - co drugiej lini ",20,210);
-	text(" - loini ",20,230);
+	text(" - loini ",33,230);
 
-	text(" - wygiecia ",20,280);
-	text(" - powt\u00f3rze\u0144 wygiecia ",20,300);
-	text(" - ??? ",20,320);
+	text(" - wygiecia ",40,280);
+	text(" - powt\u00f3rze\u0144 wygiecia ",63,300);
+	text(" - ??? ",34,320);
 
 	popMatrix();
 
 	pushMatrix();	
-	translate(700,50);
+	translate(680,50);
 	textFont(font_a);
 	text(" SHORTCUT ",20,60);
 	
-	text(" PRZESUWANIE",20,80);
 	textFont(font_b);
-	text(" [ space ] + [ LMB ]  i  [ h ] + [ LMB ]",20,100);
+	text(" przesuwanie",20,80);
+	text(" [ space ] + [ LMB ]  lub  [ h ] + [ LMB ]",20,100);
 	// text(" [ h ] + [ LMB ] ",20,120);
 
-	textFont(font_a);
-	text(" POWIEKSZENIE ",20,140);
+	// textFont(font_a);
+	text(" powi\u0119kszanie | zoom in",20,140);
 	textFont(font_b);
-	text(" [ Ctrl ] + [ + ]  i  [ scrol ]",20,160);
+	text(" [ Ctrl ] + [ + ]  lub  [ scrol ]",20,160);
 	// text(" [ scrol ] ",20,180);
 
-	textFont(font_a);
-	text(" POMNIEJSZENIE ",20,200);
+	// textFont(font_a);
+	text(" pomniejszanie | zoom out ",20,200);
 	textFont(font_b);
-	text(" [ Ctrl ] + [ - ]  i  [ scrol ]",20,220);
+	text(" [ Ctrl ] + [ - ]  lub  [ scrol ]",20,220);
 	// text(" [ scrol ] ",20,240);
 
-	textFont(font_a);
-	text(" RESET ",20,260);
+	// textFont(font_a);
+	text(" presety format\u00f3w ",20,260);
 	textFont(font_b);
-	text(" [ Shift ] + [ r ] ",20,280);
+	text(" [ A ] + [ 0 - 6 ]  i  [ B ] + [ 0 - 6 ]",20,280);
 
-	textFont(font_a);
-	text(" FORMATY ",20,300);
+	// textFont(font_a);
+	text(" viewport reset ",20,320);
 	textFont(font_b);
-	text(" [ A ] + [ 0 - 6 ]  i  [ B ] + [ 0 - 6 ]",20,320);
+	text(" [ Shift ] + [ r ] ",20,340);
 	// text(" [ b ] + [ 0 - 6 ] ",20,340);
 
-	text(" * [ LMB ] lewy przycisk myszy ",20,360);
+	text(" * [ LMB ] lewy przycisk myszy ",20,380);
 
 	popMatrix();
 }
@@ -781,6 +744,31 @@ public void ws_info(){
   popMatrix();
   noFill();
 }
+
+public void info_b(){
+	fill(0);
+	font_c = loadFont("PTSansPro-Regular-12.vlw");
+	textFont(font_c);
+	textAlign(RIGHT);
+	text(" fps : " + PApplet.parseInt(frameRate) + " | " + " zoom : " + PApplet.parseInt(zoom * 100) + " %",width-10,20);
+}
+
+public void preset_info(String str, float _con){
+  PFont preset_info_txt = loadFont("PTSansPro-Bold-62.vlw");
+  textFont(preset_info_txt);
+  textAlign(CENTER);
+  noStroke();
+
+	fill(255,map(_con,1,50,255,10));
+  pushMatrix();
+  translate((width-350)/2,50);
+  rect(0,0,350,60);
+  popMatrix();
+
+  fill(0,map(_con,1,50,255,10));
+  text("FORMAT " + str,width/2,100);
+}
+
 // funkcja usrala koordynaty puknkt\u00f3w potrzebne 
 public float[][] points(float _y,boolean seg_nr){
 	float x , y;
