@@ -25,7 +25,6 @@ public class ck_raster extends PApplet {
 
 
 
-
 P8gGraphicsSVG svg;
 ControlP5 cp5;
 
@@ -93,6 +92,10 @@ boolean s6 = false;
 
 public void setup() {
 
+  PImage icon = loadImage("ikonaGenerator.gif");
+  frame.setIconImage((Image) icon.getNative());
+  frame.setTitle("generator rastra ck");
+
   frameRate(30);
   size(displayWidth, displayHeight);
 
@@ -111,7 +114,7 @@ public void setup() {
   cp5.setColorForeground(0xff000000);
   cp5.setColorBackground(0xffB4B4B4);
   cp5.setColorActive(0xff838383);
- 
+
   // --------------------------------------------- [ przestrzen robocza ]
 
   float ws_menu_x = 50;
@@ -150,7 +153,7 @@ public void setup() {
     .setText("PARAMETRY LINII")
       .setPosition(linia_menu_x, linia_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
-        .setColorValue(0xff000000);
+          .setColorValue(0xff000000);
 
   Slider c = cp5.addSlider("l_len")
     .setCaptionLabel("d\u0142ugo\u015b\u0107")
@@ -197,9 +200,9 @@ public void setup() {
     .setText("WYGI\u0118CIE SINUSOIDALNE")
       .setPosition(sin_menu_x, sin_menu_y)
         .setFont(loadFont("PTSansPro-Regular-12.vlw"))
-        .setColorValue(0xff000000);
+          .setColorValue(0xff000000);
 
-Slider h = cp5.addSlider("sin_amp")
+  Slider h = cp5.addSlider("sin_amp")
     .setCaptionLabel("amplituda")
       .setPosition(sin_menu_x, sin_menu_y+sin_menu_s)
         .setSize(sin_menu_w, sin_menu_h)
@@ -259,7 +262,7 @@ public void draw() {
   float n_l_int_val = ( l_len * l_int_val );
   background(bg_color);
 
-  if( fA == true && s0 == true){
+  if ( fA == true && s0 == true) {
     ws_width = 841 / cal;
     ws_height = 1189 / cal;
     count = 0;
@@ -268,7 +271,7 @@ public void draw() {
     println("A0 - format drukarski");
   }
 
-  if( fA == true && s1 == true){
+  if ( fA == true && s1 == true) {
     ws_width = 594 / cal;
     ws_height = 841 / cal;
     count = 0;
@@ -277,7 +280,7 @@ public void draw() {
     println("A1 - format drukarski");
   }
 
-  if( fA == true && s2 == true){
+  if ( fA == true && s2 == true) {
     ws_width = 420 / cal;
     ws_height = 594 / cal;
     count = 0;
@@ -286,7 +289,7 @@ public void draw() {
     println("A2 - format drukarski");
   }
 
-  if( fA == true && s3 == true){
+  if ( fA == true && s3 == true) {
     ws_width = 297 / cal;
     ws_height = 420 / cal;
     count = 0;
@@ -295,7 +298,7 @@ public void draw() {
     println("A3 - format drukarski");
   }
 
-  if( fA == true && s4 == true){
+  if ( fA == true && s4 == true) {
     ws_width = 210 / cal;
     ws_height = 297 / cal;
     count = 0;
@@ -304,7 +307,7 @@ public void draw() {
     println("A4 - format drukarski");
   }
 
-  if( fA == true && s5 == true){
+  if ( fA == true && s5 == true) {
     ws_width = 148 / cal;
     ws_height = 210 / cal;
     count = 0;
@@ -313,16 +316,16 @@ public void draw() {
     println("A5 - format drukarski");
   }
 
-  if( fA == true && s6 == true){
+  if ( fA == true && s6 == true) {
     ws_width = 105 / cal;
     ws_height = 148 / cal;
     count = 0;
     preset_toggle = true;
     preset_format = "A6";
-    println("A6 - format drukarski"); 
+    println("A6 - format drukarski");
   }
 
-  if( fB == true && s0 == true){
+  if ( fB == true && s0 == true) {
     ws_width = 1000 / cal;
     ws_height = 1414 / cal;
     count = 0;
@@ -331,7 +334,7 @@ public void draw() {
     println("B0 - format drukarski");
   }
 
-  if( fB == true && s1 == true){
+  if ( fB == true && s1 == true) {
     ws_width = 707 / cal;
     ws_height = 1000 / cal;
     count = 0;
@@ -340,7 +343,7 @@ public void draw() {
     println("B1 - format drukarski");
   }
 
-  if( fB == true && s2 == true){
+  if ( fB == true && s2 == true) {
     ws_width = 500 / cal;
     ws_height = 707 / cal;
     count = 0;
@@ -349,7 +352,7 @@ public void draw() {
     println("B2 - format drukarski");
   }
 
-  if( fB == true && s3 == true){
+  if ( fB == true && s3 == true) {
     ws_width = 353 / cal;
     ws_height = 500 / cal;
     count = 0;
@@ -358,7 +361,7 @@ public void draw() {
     println("B3 - format drukarski");
   }
 
-  if( fB == true && s4 == true){
+  if ( fB == true && s4 == true) {
     ws_width = 250 / cal;
     ws_height = 353 / cal;
     count = 0;
@@ -367,7 +370,7 @@ public void draw() {
     println("B4 - format drukarski");
   }
 
-  if( fB == true && s5 == true){
+  if ( fB == true && s5 == true) {
     ws_width = 176 / cal;
     ws_height = 250 / cal;
     count = 0;
@@ -376,13 +379,13 @@ public void draw() {
     println("B5 - format drukarski");
   }
 
-  if( fB == true && s6 == true){
+  if ( fB == true && s6 == true) {
     ws_width = 125 / cal;
     ws_height = 176 / cal;
     count = 0;
     preset_toggle = true;
     preset_format = "B6";
-    println("B6 - format drukarski"); 
+    println("B6 - format drukarski");
   }
 
   pushMatrix();
@@ -421,7 +424,7 @@ public void draw() {
   g2.setStroke(pen);
 
   for (int i = 0; i < ( ws_height / l_int_lin ); i++) {
-    qcur(points( i * l_int_lin , false));
+    qcur(points( i * l_int_lin, false));
     qcur(points( i * l_int_lin + ( l_int_lin/2 ), true));
   }
   popMatrix();
@@ -434,26 +437,25 @@ public void draw() {
 
 
   noStroke();
-  fill(255,255,255,200);
-  rect(0,50,500,450);
+  fill(255, 255, 255, 200);
+  rect(0, 50, 500, 450);
   rect(50, 50, 350, 30);
   // shape(logo, 50, 50, 350, 30);
 
-  if(info_toggle == true){
+  if (info_toggle == true) {
     info();
   }
   noSmooth();
   shape(logo, 50, 50);
   smooth();
-  shape(logo_txt,50, 50);
+  shape(logo_txt, 50, 50);
 
-  if(preset_toggle == true){
+  if (preset_toggle == true) {
     counter();
-    preset_info(preset_format,counter());
+    preset_info(preset_format, counter());
   }
   info_b();
   // info();
-
 }
 
 public void ws_display() {
@@ -479,10 +481,8 @@ public void keyPressed() {
 
   if (key == '=') {
     zoom += 0.1f;
-
   } else if (key == '-') {
     zoom -= 0.1f;
-
   }
 
   if (key == 'a') fA = true; 
@@ -494,8 +494,6 @@ public void keyPressed() {
   if (key == '4') s4 = true;
   if (key == '5') s5 = true;
   if (key == '6') s6 = true;
-
-
 } 
 
 public void keyReleased() {
@@ -560,7 +558,7 @@ public void exportFileSVG(File selection) {
 }
 
 public void toggle(boolean theFlag) {
-  if(theFlag==true) {
+  if (theFlag==true) {
     info_toggle = true;
   } else {
     info_toggle = false;
@@ -568,11 +566,11 @@ public void toggle(boolean theFlag) {
   // println(info_toggle);
 }
 
-public float counter(){
-  if(count <= 200){
+public float counter() {
+  if (count <= 200) {
     count++;
   }
-  if(count == 200){
+  if (count == 200) {
     count = 200;
     preset_toggle = false;
   }
@@ -661,6 +659,7 @@ public void temp_info() {
 
   popMatrix();
 }
+
 PFont font_b,font_c;
 public void info(){
 	/*
@@ -916,7 +915,7 @@ public float sub(float _in_a, float _in_b, float _pos){
 
 }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "ck_raster" };
+    String[] appletArgs = new String[] { "--full-screen", "--bgcolor=#666666", "--stop-color=#cccccc", "ck_raster" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
