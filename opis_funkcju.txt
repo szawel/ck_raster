@@ -1,6 +1,0 @@
-﻿ws_width	szerokość	szerokośc obszaru roboczego i obszaru exportu 	pt	100 - 1000
-ws_higth	wyskość		wysokość obszaru roboczego i obszaru exportu	pt	100 - 1000
-
-l_len		dłgość 		długość lini opisanej 				pt	5 - 100
-l_int_val	odstemp		odstemp pomiedzy liniami w jednym wierszu	float	0 - 1
-				
